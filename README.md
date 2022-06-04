@@ -1,5 +1,7 @@
 # Godot Visualization Tools
 
+/!\ Rewrite in progress. See the `rewrite` branch (requires Godot 3.5).
+
 A collection of scripts and tools for debug visualizations and animations for content creation.
 
 This is a work-in-progress. Mose of this code comes from our project [Godot Node Essentials](https://github.com/GDQuest/godot-node-essentials).
