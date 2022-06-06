@@ -14,7 +14,8 @@ func _draw() -> void:
 	material.shader = _theme.get_shader(get_class())
 	match _theme.theme:
 		DebugCollisionTheme.ThemeType.SIMPLE, DebugCollisionTheme.ThemeType.DASHED:
-			_theme.is_implemented and _theme.theme_width != 0 and _draw_collisionpolygon2d()
+			if _theme.is_implemented and _theme.theme_width != 0:
+				_draw_collisionpolygon2d()
 
 		DebugCollisionTheme.ThemeType.HALO:
 			VisualServer.canvas_item_clear(get_canvas_item())
