@@ -1,0 +1,140 @@
+[gd_scene load_steps=20 format=2]
+
+[ext_resource path="res://addons/gdquest_visualization_tools/DebugCollisionShape2D.gd" type="Script" id=1]
+[ext_resource path="res://addons/gdquest_visualization_tools/DebugCollisionPolygon2D.gd" type="Script" id=2]
+[ext_resource path="res://Test.gd" type="Script" id=3]
+[ext_resource path="res://addons/gdquest_visualization_tools/shaders/Shape2D.tres" type="Shader" id=4]
+[ext_resource path="res://addons/gdquest_visualization_tools/DebugRayCast2D.gd" type="Script" id=5]
+[ext_resource path="res://addons/gdquest_visualization_tools/shaders/HaloPolygonShape2D.tres" type="Shader" id=6]
+[ext_resource path="res://addons/gdquest_visualization_tools/DebugPath2D.gd" type="Script" id=7]
+
+[sub_resource type="ShaderMaterial" id=77]
+shader = ExtResource( 4 )
+
+[sub_resource type="ConvexPolygonShape2D" id=2]
+points = PoolVector2Array( -100, -60, 100, -20, 0, 200, -80, 200 )
+
+[sub_resource type="ShaderMaterial" id=78]
+shader = ExtResource( 4 )
+
+[sub_resource type="CapsuleShape2D" id=67]
+radius = 49.0
+
+[sub_resource type="ShaderMaterial" id=79]
+shader = ExtResource( 4 )
+
+[sub_resource type="RectangleShape2D" id=38]
+extents = Vector2( 86.5, 95.5 )
+
+[sub_resource type="ShaderMaterial" id=80]
+shader = ExtResource( 4 )
+
+[sub_resource type="LineShape2D" id=43]
+
+[sub_resource type="Image" id=84]
+data = {
+"data": PoolByteArray( 62, 195, 174, 62, 178, 44, 203, 62, 97, 158, 40, 63, 249, 232, 228, 62, 0, 0, 128, 63, 121, 158, 103, 63, 153, 153, 25, 63, 255, 255, 127, 63, 39, 234, 95, 62, 215, 117, 93, 63 ),
+"format": "RGFloat",
+"height": 1,
+"mipmaps": false,
+"width": 5
+}
+
+[sub_resource type="ImageTexture" id=82]
+flags = 0
+flags = 0
+image = SubResource( 84 )
+size = Vector2( 5, 1 )
+
+[sub_resource type="ShaderMaterial" id=83]
+shader = ExtResource( 6 )
+shader_param/falloff = 0.084
+shader_param/points_size = 5
+shader_param/points = SubResource( 82 )
+
+[sub_resource type="Curve2D" id=76]
+_data = {
+"points": PoolVector2Array( 0, 0, 0, 0, 474, 479, 0, 0, 0, 0, 645, 372, 143.01, 145.644, -143.01, -145.644, 764, 340, 0, 0, 0, 0, 883, 303, 0, 0, 0, 0, 891, 158 )
+}
+
+[node name="Test" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="ButtonDebugShapes" type="Button" parent="."]
+margin_right = 88.0
+margin_bottom = 20.0
+text = "Debug Shapes"
+
+[node name="ButtonDebugNavigation" type="Button" parent="."]
+margin_left = 103.0
+margin_right = 227.0
+margin_bottom = 20.0
+text = "Debug Navigation"
+
+[node name="DebugCollisionShape2D" type="CollisionShape2D" parent="."]
+self_modulate = Color( 0.301961, 0.65098, 1, 1 )
+material = SubResource( 77 )
+position = Vector2( 77, 71 )
+shape = SubResource( 2 )
+script = ExtResource( 1 )
+palette = 0
+theme = 0
+theme_width = 4
+theme_sample = 24
+
+[node name="DebugCollisionShape2D2" type="CollisionShape2D" parent="."]
+self_modulate = Color( 0.301961, 0.65098, 1, 1 )
+material = SubResource( 78 )
+position = Vector2( 338, 101 )
+shape = SubResource( 67 )
+script = ExtResource( 1 )
+palette = 0
+theme = 0
+theme_width = 4
+theme_sample = 24
+
+[node name="DebugCollisionShape2D3" type="CollisionShape2D" parent="."]
+self_modulate = Color( 0.560784, 0.870588, 0.364706, 1 )
+material = SubResource( 79 )
+position = Vector2( 552.5, 121.5 )
+shape = SubResource( 38 )
+script = ExtResource( 1 )
+palette = 2
+theme = 0
+theme_width = 4
+theme_sample = 24
+
+[node name="DebugCollisionShape2D4" type="CollisionShape2D" parent="."]
+self_modulate = Color( 0.301961, 0.65098, 1, 1 )
+material = SubResource( 80 )
+position = Vector2( 614, 314 )
+shape = SubResource( 43 )
+script = ExtResource( 1 )
+palette = 0
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+
+[node name="DebugCollisionPolygon2D" type="CollisionPolygon2D" parent="StaticBody2D"]
+self_modulate = Color( 1, 0.894118, 0.470588, 1 )
+material = SubResource( 83 )
+position = Vector2( -10, 132 )
+polygon = PoolVector2Array( 128, 150, 247, 169, 375, 342, 225, 378, 82, 327 )
+script = ExtResource( 2 )
+palette = 1
+theme = 2
+theme_falloff = 0.084
+
+[node name="DebugRayCast2D" type="RayCast2D" parent="."]
+position = Vector2( 464, 320 )
+enabled = true
+cast_to = Vector2( -158, 115 )
+script = ExtResource( 5 )
+theme = 1
+
+[node name="DebugPath2D" type="Path2D" parent="."]
+self_modulate = Color( 0.301961, 0.65098, 1, 1 )
+position = Vector2( -67, 5 )
+curve = SubResource( 76 )
+script = ExtResource( 7 )
+width = 9
+spread = 106.47
