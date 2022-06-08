@@ -1,12 +1,12 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugCollisionShape2D.gd" type="Script" id=1]
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugCollisionPolygon2D.gd" type="Script" id=2]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugCollisionShape2D.gd" type="Script" id=1]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugCollisionPolygon2D.gd" type="Script" id=2]
 [ext_resource path="res://Test.gd" type="Script" id=3]
-[ext_resource path="res://addons/gdquest_visualization_tools/shaders/Shape2D.tres" type="Shader" id=4]
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugRayCast2D.gd" type="Script" id=5]
-[ext_resource path="res://addons/gdquest_visualization_tools/shaders/HaloPolygonShape2D.tres" type="Shader" id=6]
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugPath2D.gd" type="Script" id=7]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/shaders/Shape2D.tres" type="Shader" id=4]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugRayCast2D.gd" type="Script" id=5]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/shaders/HaloPolygonShape2D.tres" type="Shader" id=6]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugPath2D.gd" type="Script" id=7]
 
 [sub_resource type="ShaderMaterial" id=77]
 shader = ExtResource( 4 )
