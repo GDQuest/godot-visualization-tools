@@ -4,7 +4,7 @@
 code = "shader_type spatial;
 render_mode depth_draw_opaque, cull_disabled, ambient_light_disabled, blend_add, shadows_disabled;
 
-uniform vec4 halo_color: hint_color = vec4(1.0);
+uniform vec4 color: hint_color = vec4(1.0);
 uniform float fresnel_power = 1.0;
 uniform float edge_intensity = 0.5;
 
@@ -24,6 +24,6 @@ void fragment() {
 
 	//Apply final color
 	ALBEDO = vec3(0);
-	EMISSION = halo_color.rgb;
+	EMISSION = color.rgb;
 	ALPHA = smoothstep(0.0, 1.0, fresnel);
 }"

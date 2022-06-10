@@ -13,13 +13,13 @@ const THEME_MAP := {
 		"CollisionPolygon2D": preload("shaders/HaloPolygonShape2D.tres"),
 	}
 }
-const THEME_WIDTH := {
+const THEME_WIDTH_PROPERTY := {
 	"name": "theme_width", "type": TYPE_INT, "hint": PROPERTY_HINT_RANGE, "hint_string": "0,10"
 }
-const THEME_SAMPLE := {
+const THEME_SAMPLE_PROPERTY := {
 	"name": "theme_sample", "type": TYPE_INT, "hint": PROPERTY_HINT_RANGE, "hint_string": "16,64"
 }
-const THEME_FALLOFF := {
+const THEME_FALLOFF_PROPERTY := {
 	"name": "theme_falloff",
 	"type": TYPE_REAL,
 	"hint": PROPERTY_HINT_RANGE,
@@ -30,13 +30,13 @@ var _palette_property := {
 	"name": "palette",
 	"type": TYPE_INT,
 	"hint": PROPERTY_HINT_ENUM,
-	"hint_string": _enum_to_string(DebugPalette.Type)
+	"hint_string": DebugUtils.enum_to_string(DebugPalette.Type)
 }
 var _theme_property := {
 	"name": "theme",
 	"type": TYPE_INT,
 	"hint": PROPERTY_HINT_ENUM,
-	"hint_string": _enum_to_string(ThemeType)
+	"hint_string": DebugUtils.enum_to_string(ThemeType)
 }
 var _node: Node2D = null
 var _previus_palette: int = DebugPalette.Type.INTERACT
@@ -65,11 +65,11 @@ func get_property_list() -> Array:
 		[false, _, _]:
 			result = [_palette_property]
 		[true, ThemeType.HALO, _]:
-			result = [_palette_property, _theme_property, THEME_FALLOFF]
+			result = [_palette_property, _theme_property, THEME_FALLOFF_PROPERTY]
 		[true, _, 0]:
-			result = [_palette_property, _theme_property, THEME_WIDTH]
+			result = [_palette_property, _theme_property, THEME_WIDTH_PROPERTY]
 		_:
-			result = [_palette_property, _theme_property, THEME_WIDTH, THEME_SAMPLE]
+			result = [_palette_property, _theme_property, THEME_WIDTH_PROPERTY, THEME_SAMPLE_PROPERTY]
 	return result
 
 
@@ -136,10 +136,3 @@ func _set_theme_falloff(new_theme_falloff: float) -> bool:
 	theme_falloff = new_theme_falloff
 	_node.material.set_shader_param("falloff", theme_falloff)
 	return true
-
-
-func _enum_to_string(e: Dictionary) -> String:
-	var partial_result := []
-	for key in e:
-		partial_result.push_back(key.capitalize())
-	return ",".join(partial_result)

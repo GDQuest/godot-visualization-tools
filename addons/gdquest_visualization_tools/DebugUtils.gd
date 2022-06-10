@@ -1,6 +1,13 @@
 class_name DebugUtils
 
 
+static func enum_to_string(e: Dictionary) -> String:
+	var partial_result := []
+	for key in e:
+		partial_result.push_back(key.capitalize())
+	return ",".join(partial_result)
+
+
 static func array_to_texture(xs: Array) -> ImageTexture:
 	var result := ImageTexture.new()
 	if xs.empty():

@@ -31,7 +31,7 @@ shader = ExtResource( 4 )
 
 [sub_resource type="LineShape2D" id=43]
 
-[sub_resource type="Image" id=84]
+[sub_resource type="Image" id=81]
 data = {
 "data": PoolByteArray( 62, 195, 174, 62, 178, 44, 203, 62, 97, 158, 40, 63, 249, 232, 228, 62, 0, 0, 128, 63, 121, 158, 103, 63, 153, 153, 25, 63, 255, 255, 127, 63, 39, 234, 95, 62, 215, 117, 93, 63 ),
 "format": "RGFloat",
@@ -40,17 +40,17 @@ data = {
 "width": 5
 }
 
-[sub_resource type="ImageTexture" id=85]
+[sub_resource type="ImageTexture" id=82]
 flags = 0
 flags = 0
-image = SubResource( 84 )
+image = SubResource( 81 )
 size = Vector2( 5, 1 )
 
 [sub_resource type="ShaderMaterial" id=83]
 shader = ExtResource( 6 )
 shader_param/falloff = 0.084
 shader_param/points_size = 5
-shader_param/points = SubResource( 85 )
+shader_param/points = SubResource( 82 )
 
 [sub_resource type="Curve2D" id=76]
 _data = {
