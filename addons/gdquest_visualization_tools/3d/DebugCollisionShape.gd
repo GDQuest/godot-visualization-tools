@@ -29,7 +29,7 @@ func _exit_tree() -> void:
 
 
 func _notification(what: int) -> void:
-	if shape == null:
+	if not (shape != null and has_method("_update_%s" % [shape.get_class().to_lower()])):
 		return
 
 	match what:
