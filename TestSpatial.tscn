@@ -1,26 +1,13 @@
 [gd_scene load_steps=3 format=2]
 
-[sub_resource type="CapsuleShape" id=2]
+[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionShape.gd" type="Script" id=1]
 
-[sub_resource type="BoxShape" id=1]
-extents = Vector3( 1.02579, 2, 1 )
+[sub_resource type="SphereShape" id=1]
+radius = 1.71652
 
 [node name="Spatial" type="Spatial"]
 
-[node name="VisibilityNotifier" type="VisibilityNotifier" parent="."]
-
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 0.949239, -0.0994091, 0.298435, 0, 0.948749, 0.31603, -0.314556, -0.299988, 0.90059, 1.53463, 1.26746, 3.10325 )
-
-[node name="Area" type="Area" parent="."]
-
-[node name="CollisionShape" type="CollisionShape" parent="Area"]
-shape = SubResource( 2 )
-
-[node name="CollisionShape2" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00181, 0, -1.66672 )
+[node name="DebugCollisionShape" type="CollisionShape" parent="."]
+transform = Transform( 0.71156, 4.18797e-08, 0.702625, 0, 1, -5.96046e-08, -0.702625, 4.24123e-08, 0.71156, 0.880925, 1.54863, 0.818271 )
 shape = SubResource( 1 )
-
-[node name="CollisionShape3" type="CollisionShape" parent="Area"]
-transform = Transform( 1, 0, 0, 0, 1, 0, 0, 0, 1, 1.00181, 0, -1.66672 )
-shape = SubResource( 1 )
+script = ExtResource( 1 )

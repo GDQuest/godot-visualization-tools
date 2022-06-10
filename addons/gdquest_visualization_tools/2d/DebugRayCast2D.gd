@@ -15,6 +15,11 @@ var _color: Color = DebugPalette.COLORS[palette]
 var _cast_to := cast_to
 
 
+func _ready() -> void:
+	if not Engine.editor_hint:
+		add_to_group("GVTCollision2D")
+
+
 func _physics_process(delta: float) -> void:
 	if is_colliding():
 		_color = DebugPalette.COLORS[palette].contrasted()

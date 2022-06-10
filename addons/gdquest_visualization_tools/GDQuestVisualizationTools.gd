@@ -1,10 +1,20 @@
 extends Node
 
 
-func update_debug() -> void:
-	var queue_stack := [get_tree().current_scene]
-	while not queue_stack.empty():
-		var node: Node = queue_stack.pop_back()
-		if is_instance_valid(node):
-			queue_stack.append_array(node.get_children())
-			node.has_method("update") and node.update()
+var is_debug_collision_2d_visible := true setget set_is_debug_collision_2d_visible
+var is_debug_navigation_2d_visible := true setget set_is_debug_navigation_2d_visible
+
+
+func _ready() -> void:
+	set_is_debug_collision_2d_visible(is_debug_collision_2d_visible)
+	set_is_debug_navigation_2d_visible(is_debug_navigation_2d_visible)
+
+
+func set_is_debug_collision_2d_visible(new_is_debug_collision_2d_visible: bool) -> void:
+	is_debug_collision_2d_visible = new_is_debug_collision_2d_visible
+	get_tree().call_group("GVTCollision2D", "set_visible", is_debug_collision_2d_visible)
+
+
+func set_is_debug_navigation_2d_visible(new_is_debug_navigation_2d_visible: bool) -> void:
+	is_debug_navigation_2d_visible = new_is_debug_navigation_2d_visible
+	get_tree().call_group("GVTNavigation2D", "set_visible", is_debug_navigation_2d_visible)

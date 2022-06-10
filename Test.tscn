@@ -40,7 +40,7 @@ data = {
 "width": 5
 }
 
-[sub_resource type="ImageTexture" id=82]
+[sub_resource type="ImageTexture" id=85]
 flags = 0
 flags = 0
 image = SubResource( 84 )
@@ -50,7 +50,7 @@ size = Vector2( 5, 1 )
 shader = ExtResource( 6 )
 shader_param/falloff = 0.084
 shader_param/points_size = 5
-shader_param/points = SubResource( 82 )
+shader_param/points = SubResource( 85 )
 
 [sub_resource type="Curve2D" id=76]
 _data = {

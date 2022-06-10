@@ -20,6 +20,11 @@ func _init() -> void:
 	self_modulate = COLOR
 
 
+func _ready() -> void:
+	if not Engine.editor_hint:
+		add_to_group("GVTNavigation2D")
+
+
 func _draw() -> void:
 	var points := curve.get_baked_points()
 	if points.empty() or not Engine.editor_hint and not get_tree().debug_navigation_hint:

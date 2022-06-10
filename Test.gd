@@ -10,12 +10,12 @@ func _ready() -> void:
 
 func _on_ButtonDebugShapes_pressed() -> void:
 	get_tree().debug_collisions_hint = not get_tree().debug_collisions_hint
-	GDQuestVisualizationTools.update_debug()
+	GDQuestVisualizationTools.is_debug_collision_2d_visible = get_tree().debug_collisions_hint
 
 
 func _on_ButtonDebugNavigation_pressed() -> void:
 	get_tree().debug_navigation_hint = not get_tree().debug_navigation_hint
-	GDQuestVisualizationTools.update_debug()
+	GDQuestVisualizationTools.is_debug_navigation_2d_visible = get_tree().debug_navigation_hint
 
 
 func _unhandled_input(event: InputEvent) -> void:
