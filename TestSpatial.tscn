@@ -2,15 +2,15 @@
 
 [ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionShape.gd" type="Script" id=1]
 
-[sub_resource type="CapsuleShape" id=1]
+[sub_resource type="HeightMapShape" id=1]
 
 [node name="Spatial" type="Spatial"]
 
 [node name="DebugCollisionShape" type="CollisionShape" parent="."]
-transform = Transform( 0.516264, 5.10471e-08, 0.856429, 0, 1, -5.96046e-08, -0.856429, 3.07718e-08, 0.516264, 1.72378, 2.1175, 0.309705 )
+transform = Transform( 0.419347, 0.376434, -0.826103, -0.236343, 0.923869, 0.301011, 0.876521, 0.0690159, 0.476389, 0, 0, 0 )
 shape = SubResource( 1 )
 script = ExtResource( 1 )
-palette = 0
-theme = 1
-theme_fresnel_power = 0.744
-theme_edge_intensity = 0.586
+palette = 1
+
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.924619, 0.380893, 0, -0.380893, 0.924619, -0.777579, 1.65078, 3.27181 )

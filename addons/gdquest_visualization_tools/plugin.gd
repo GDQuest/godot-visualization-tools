@@ -19,7 +19,7 @@ func _exit_tree() -> void:
 
 func _on_EditorInspector_property_edited(property: String) -> void:
 	match property:
-		"palette", "enabled":
+		"palette", "enabled", "disabled":
 			get_editor_interface().get_inspector().refresh()
 
 		"shape":

@@ -1,9 +1,13 @@
 class_name DebugUtils
 
 
-static func enum_to_string(e: Dictionary) -> String:
+static func enum_to_string(e: Dictionary, slice := {}) -> String:
 	var partial_result := []
-	for key in e:
+	var keys := e.keys()
+	if not slice.empty():
+		keys = keys.slice(slice.begin, slice.end, slice.get("step", 1))
+
+	for key in keys:
 		partial_result.push_back(key.capitalize())
 	return ",".join(partial_result)
 

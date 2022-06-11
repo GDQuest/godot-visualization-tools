@@ -39,9 +39,9 @@ var _theme_property := {
 	"hint_string": DebugUtils.enum_to_string(ThemeType)
 }
 var _node: Node2D = null
-var _previus_palette: int = DebugPalette.Type.INTERACT
+var _previous_palette: int = DebugPalette.Type.INTERACT
 
-var palette: int = _previus_palette
+var palette: int = _previous_palette
 var theme: int = ThemeType.SIMPLE
 var theme_width := 4
 var theme_sample := 24
@@ -94,14 +94,14 @@ func set_property(name: String, value) -> bool:
 
 func _set_disabled_effect() -> void:
 	if palette != DebugPalette.Type.DISABLED:
-		_previus_palette = palette
+		_previous_palette = palette
 	color = DebugPalette.COLORS[palette]
 	_node.self_modulate = color
 	_node.update()
 
 
 func _set_disabled(new_is_disabled: bool) -> bool:
-	palette = DebugPalette.Type.DISABLED if new_is_disabled else _previus_palette
+	palette = DebugPalette.Type.DISABLED if new_is_disabled else _previous_palette
 	_set_disabled_effect()
 	return false
 
