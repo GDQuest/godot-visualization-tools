@@ -7,7 +7,7 @@ var _theme := DebugCollisionTheme.new(self)
 
 func _ready() -> void:
 	if not Engine.editor_hint:
-		add_to_group("GVTCollision2D")
+		add_to_group("GVTCollision")
 
 
 func _draw() -> void:

@@ -55,7 +55,7 @@ func _init() -> void:
 
 func _ready() -> void:
 	if not Engine.editor_hint:
-		add_to_group("GVTCollision3D")
+		add_to_group("GVTCollision")
 	_is_ready = true
 
 
@@ -213,8 +213,14 @@ func _get_property_list() -> Array:
 
 
 func _set(property: String, value) -> bool:
-	var method_name := "_set_%s" % [property]
-	return has_method(method_name) and funcref(self, method_name).call_func(value)
+	var result := false
+	match property:
+		"visible":
+			set_visible(value)
+		_:
+			var method_name := "_set_%s" % [property]
+			result = has_method(method_name) and funcref(self, method_name).call_func(value)
+	return result
 
 
 func _set_disabled_effect() -> void:
@@ -253,3 +259,9 @@ func _set_theme_edge_intensity(new_theme_edge_intensity: float) -> bool:
 	_theme_edge_intensity = new_theme_edge_intensity
 	_material.set_shader_param("edge_intensity", _theme_edge_intensity)
 	return true
+
+
+func set_visible(new_visible: bool) -> void:
+	visible = new_visible
+	for rid in _rids.instances:
+		VisualServer.instance_set_visible(rid, new_visible)

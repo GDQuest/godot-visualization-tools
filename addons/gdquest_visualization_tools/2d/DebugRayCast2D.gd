@@ -17,7 +17,7 @@ var _cast_to := cast_to
 
 func _ready() -> void:
 	if not Engine.editor_hint:
-		add_to_group("GVTCollision2D")
+		add_to_group("GVTCollision")
 
 
 func _physics_process(delta: float) -> void:
