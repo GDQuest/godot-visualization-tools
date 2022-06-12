@@ -27,3 +27,4 @@ func _on_EditorInspector_property_edited(property: String) -> void:
 			for node in selected_nodes:
 				if node is CollisionShape:
 					node.refresh()
+					node.property_list_changed_notify()

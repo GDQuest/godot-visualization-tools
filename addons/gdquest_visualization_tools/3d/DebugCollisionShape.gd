@@ -198,6 +198,9 @@ func _get(property: String):
 
 
 func _get_property_list() -> Array:
+	if shape == null:
+		return []
+
 	var result := [_palette_property]
 	match [_is_implemented, _theme]:
 		[false, ThemeType.HALO]:
