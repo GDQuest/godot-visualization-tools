@@ -72,7 +72,7 @@ func _draw() -> void:
 			_rids.push_back(VisualServer.immediate_create())
 			for direction in [-1, 1]:
 				VisualServer.immediate_begin(_rids[0], VisualServer.PRIMITIVE_TRIANGLE_FAN)
-				VisualServer.immediate_normal(_rids[0], Vector3.BACK)
+				VisualServer.immediate_normal(_rids[0], Vector3.BACK if Geometry.is_polygon_clockwise(polygon) else Vector3.FORWARD)
 				for point in polygon:
 					VisualServer.immediate_vertex(_rids[0], Vector3(point.x, point.y, 0.5 * depth * direction))
 				VisualServer.immediate_end(_rids[0])
