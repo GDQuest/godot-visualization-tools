@@ -12,15 +12,17 @@
 transform = Transform( 0.419347, 0.376434, -0.826103, -0.236343, 0.923869, 0.301011, 0.876521, 0.0690159, 0.476389, 1.06043, 0, 0 )
 shape = SubResource( 1 )
 script = ExtResource( 1 )
-palette = 1
+palette = 2
 theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
 
 [node name="DebugCollisionPolygon" type="CollisionPolygon" parent="."]
-transform = Transform( 0.996614, 0, -0.0822168, 0, 1, 0, 0.0822168, 0, 0.996614, -1.42375, 0.0929604, -0.0260937 )
-polygon = PoolVector2Array( 0, 0, 0, 1, 0.954773, 1.12535, 1, 0 )
+transform = Transform( 0.996614, 0, -0.0822168, 0.0581695, 0.706699, 0.705118, 0.0581026, -0.707514, 0.704306, -1.42375, 0.0929604, -0.0260937 )
+polygon = PoolVector2Array( 1.90034, 1.34453, 1.14364, 1.74429, 0, 1, -0.547082, -0.0644262, 1.04186, -0.340657 )
 script = ExtResource( 3 )
+palette = 1
+theme = 0
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.924619, 0.380893, 0, -0.380893, 0.924619, -0.777579, 1.65078, 3.27181 )

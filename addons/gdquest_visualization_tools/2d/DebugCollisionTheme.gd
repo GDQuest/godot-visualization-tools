@@ -76,16 +76,11 @@ func get_property_list() -> Array:
 
 func get_property(name: String):
 	match name:
-		"palette":
-			return palette
-		"theme":
-			return theme
-		"theme_width":
-			return theme_width
-		"theme_sample":
-			return theme_sample
-		"theme_falloff":
-			return theme_falloff
+		"palette": return palette
+		"theme": return theme
+		"theme_width": return theme_width
+		"theme_sample": return theme_sample
+		"theme_falloff": return theme_falloff
 
 
 func set_property(name: String, value) -> bool:
@@ -109,8 +104,8 @@ func _set_disabled(new_is_disabled: bool) -> bool:
 
 func _set_palette(new_palette: int) -> bool:
 	palette = new_palette
-	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
 	_set_disabled_effect()
+	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
 	return true
 
 
