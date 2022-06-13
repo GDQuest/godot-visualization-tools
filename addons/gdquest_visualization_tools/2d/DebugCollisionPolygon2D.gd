@@ -2,6 +2,10 @@ tool
 class_name DebugCollisionPolygon2D
 extends CollisionPolygon2D
 
+
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+
 var _theme := DebugCollisionTheme.new(self)
 
 

@@ -2,7 +2,11 @@ tool
 class_name DebugRayCast2D
 extends RayCast2D
 
+
 enum ThemeType { SIMPLE, DASHED }
+
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugPalette := preload("../DebugPalette.gd")
 
 const THEME_SAMPLE := 48
 

@@ -5,6 +5,9 @@ extends CollisionShape
 
 enum ThemeType {WIREFRAME, HALO}
 
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugPalette := preload("../DebugPalette.gd")
+
 const SHADERS := {
 	ThemeType.WIREFRAME: preload("shaders/Wireframe.tres"),
 	ThemeType.HALO: preload("shaders/Halo.tres")
@@ -34,7 +37,7 @@ var _theme_property := {
 	"hint": PROPERTY_HINT_ENUM,
 	"hint_string": DebugUtils.enum_to_string(ThemeType)
 }
-var _material: ShaderMaterial
+var _material := ShaderMaterial.new()
 var _rids := {"meshes": [], "instances": []}
 var _is_implemented := false
 var _is_ready := false
@@ -45,18 +48,16 @@ var _theme_fresnel_power := 1.0
 var _theme_edge_intensity := 0.5
 
 
-func _init() -> void:
-	_material = ShaderMaterial.new()
-	set_notify_transform(true)
-	_set_palette(_palette)
-	_set_theme_fresnel_power(_theme_fresnel_power)
-	_set_theme_edge_intensity(_theme_edge_intensity)
-
-
 func _ready() -> void:
 	if not Engine.editor_hint:
 		add_to_group("GVTCollision")
+
 	_is_ready = true
+	set_notify_transform(true)
+	_set_palette(_palette)
+	_set_theme(_theme)
+	_set_theme_fresnel_power(_theme_fresnel_power)
+	_set_theme_edge_intensity(_theme_edge_intensity)
 
 
 func _enter_tree() -> void:
@@ -89,11 +90,10 @@ func _notification(what: int) -> void:
 
 
 func refresh() -> void:
-	_is_implemented = false
 	if shape == null:
-		_free()
 		return
 
+	_is_implemented = false
 	if not shape.is_connected("changed", self, "_draw"):
 		shape.connect("changed", self, "_draw")
 	_draw()
@@ -104,7 +104,7 @@ func _free() -> void:
 	for key in _rids:
 		for rid in _rids[key]:
 			funcref(VisualServer, "free_rid").call_func(rid)
-		_rids[key] = []
+		_rids[key].clear()
 
 
 func _update_boxshape() -> Array:
@@ -118,6 +118,8 @@ func _update_cylindershape() -> Array:
 	mesh.top_radius = shape.radius
 	mesh.bottom_radius = shape.radius
 	mesh.height = shape.height
+	mesh.radial_segments = 32
+	mesh.rings = 0
 	return [mesh.get_mesh_arrays()]
 
 
@@ -125,6 +127,7 @@ func _update_capsuleshape() -> Array:
 	var mesh := CapsuleMesh.new()
 	mesh.radius = shape.radius
 	mesh.mid_height = shape.height
+	mesh.radial_segments = 32
 	return [mesh.get_mesh_arrays()]
 
 
@@ -134,11 +137,15 @@ func _update_rayshape() -> Array:
 	mesh.top_radius = 0.01
 	mesh.bottom_radius = mesh.top_radius
 	mesh.height = shape.length
+	mesh.radial_segments = 4
+	mesh.rings = 0
 	result.push_back(mesh.get_mesh_arrays())
 
 	mesh = SphereMesh.new()
 	mesh.radius = 0.03
 	mesh.height = 2 * mesh.radius
+	mesh.radial_segments = 16
+	mesh.rings = 8
 	result.push_back(mesh.get_mesh_arrays())
 	return result
 
@@ -147,6 +154,8 @@ func _update_sphereshape() -> Array:
 	var mesh := SphereMesh.new()
 	mesh.radius = shape.radius
 	mesh.height = 2 * shape.radius
+	mesh.radial_segments = 32
+	mesh.rings = 16
 	return [mesh.get_mesh_arrays()]
 
 

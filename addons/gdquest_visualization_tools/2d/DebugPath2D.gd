@@ -2,7 +2,8 @@ tool
 class_name DebugPath2D
 extends Path2D
 
-enum ThemeType { SIMPLE, DASHED }
+
+const DebugPalette := preload("../DebugPalette.gd")
 
 const DEFAULT_THEME_WIDTH := 4
 const COLOR := DebugPalette.COLORS[DebugPalette.Type.INTERACT]

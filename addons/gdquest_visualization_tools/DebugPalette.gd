@@ -1,5 +1,3 @@
-class_name DebugPalette
-
 enum Type { INTERACT, COLLECTIBLE, HITBOX, HURTBOX, WALL_COLLISION, AI_VISION, DISABLED }
 
 const COLORS := {

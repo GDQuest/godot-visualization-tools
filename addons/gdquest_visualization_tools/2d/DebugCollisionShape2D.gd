@@ -2,6 +2,10 @@ tool
 class_name DebugCollisionShape2D
 extends CollisionShape2D
 
+
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+
 var _theme := DebugCollisionTheme.new(self)
 
 

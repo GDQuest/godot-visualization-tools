@@ -1,6 +1,7 @@
-class_name DebugCollisionTheme
-
 enum ThemeType { SIMPLE, DASHED, HALO }
+
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugPalette := preload("../DebugPalette.gd")
 
 const SHAPE_2D_SHADER := preload("shaders/Shape2D.tres")
 const THEME_MAP := {

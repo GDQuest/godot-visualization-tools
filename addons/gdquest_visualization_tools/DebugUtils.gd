@@ -1,6 +1,3 @@
-class_name DebugUtils
-
-
 static func enum_to_string(e: Dictionary, slice := {}) -> String:
 	var partial_result := []
 	var keys := e.keys()
