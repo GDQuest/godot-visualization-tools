@@ -3,15 +3,16 @@ class_name DebugCollisionShape
 extends CollisionShape
 
 
+const DebugUtils := preload("../DebugUtils.gd")
 const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
 
 var _theme := DebugCollisionTheme.new(self)
 
 
 func _ready() -> void:
+	set_notify_transform(true)
 	if not Engine.editor_hint:
 		add_to_group("GVTCollision")
-	_theme.setup()
 
 
 func _enter_tree() -> void:
@@ -30,6 +31,10 @@ func _notification(what: int) -> void:
 		NOTIFICATION_TRANSFORM_CHANGED:
 			var xform := global_transform
 			match [shape.get_class(), _theme.theme]:
+				["RayShape", DebugCollisionTheme.ThemeType.WIREFRAME]:
+					for rid in _theme.rids.instances:
+						VisualServer.instance_set_transform(rid, xform)
+						xform = transform.translated(shape.length * Vector3.BACK)
 				["RayShape", DebugCollisionTheme.ThemeType.HALO]:
 					xform.origin = Vector3.ZERO
 					xform = xform.rotated(global_transform.basis.x, PI / 2)
@@ -111,17 +116,12 @@ func _draw_meshes(mesh_info: Dictionary) -> void:
 	if mesh_info.empty() or world == null:
 		return
 
-	for array in mesh_info.arrays:
-		var mesh_RID := VisualServer.mesh_create()
-		VisualServer.mesh_add_surface_from_arrays(mesh_RID, mesh_info.primitive_type, array)
-		VisualServer.mesh_surface_set_material(mesh_RID, 0, _theme.material.get_rid())
-		_theme.rids.instances.push_back(VisualServer.instance_create2(mesh_RID, get_world().scenario))
-		_theme.rids.resources.push_back(mesh_RID)
+	_theme.free_rids()
+	_theme.rids = DebugUtils.draw_meshes(mesh_info.primitive_type, mesh_info.arrays, _theme.material.get_rid(), world.scenario)
 	_notification(NOTIFICATION_TRANSFORM_CHANGED)
 
 
 func _draw() -> void:
-	_theme.free_rids()
 	var method_name := "_update_%s" % [shape.get_class().to_lower()]
 	_theme.is_implemented = has_method(method_name)
 	var meshes_info := {}
@@ -133,6 +133,11 @@ func _draw() -> void:
 					"primitive_type": VisualServer.PRIMITIVE_LINES,
 					"arrays": [mesh.surface_get_arrays(0)]
 				}
+
+				if shape.get_class() == "RayShape":
+					var sphere_shape := SphereShape.new()
+					sphere_shape.radius = 0.03
+					meshes_info.arrays.append(sphere_shape.get_debug_mesh().surface_get_arrays(0))
 		[true, DebugCollisionTheme.ThemeType.HALO]:
 			meshes_info = {
 				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,

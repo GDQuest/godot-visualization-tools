@@ -14,7 +14,7 @@ export(DebugPalette.Type) var palette := DebugPalette.Type.INTERACT setget set_p
 export(ThemeType) var theme := ThemeType.SIMPLE setget set_theme
 export(int, 0, 10) var theme_width := 4 setget set_theme_width
 
-var _previus_palette: int = palette
+var _previous_palette: int = palette
 var _color: Color = DebugPalette.COLORS[palette]
 var _cast_to := cast_to
 
@@ -35,7 +35,7 @@ func _physics_process(delta: float) -> void:
 
 
 func _draw() -> void:
-	if not Engine.editor_hint and not get_tree().debug_collisions_hint:
+	if not visible:
 		return
 
 	draw_circle(_cast_to, theme_width, _color)
@@ -64,7 +64,7 @@ func _get_curve_line() -> Curve2D:
 
 func _set_enabled_effect() -> void:
 	if palette != DebugPalette.Type.DISABLED:
-		_previus_palette = palette
+		_previous_palette = palette
 	_color = DebugPalette.COLORS[palette]
 	update()
 
@@ -72,7 +72,7 @@ func _set_enabled_effect() -> void:
 func _set(property: String, value) -> bool:
 	match property:
 		"enabled":
-			palette = _previus_palette if value else DebugPalette.Type.DISABLED
+			palette = _previous_palette if value else DebugPalette.Type.DISABLED
 			_set_enabled_effect()
 	return false
 

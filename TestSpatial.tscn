@@ -1,10 +1,43 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionShape.gd" type="Script" id=1]
 [ext_resource path="res://UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionPolygon.gd" type="Script" id=3]
+[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugRayCast.gd" type="Script" id=4]
 
 [sub_resource type="BoxShape" id=1]
+
+[sub_resource type="Animation" id=2]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/path = NodePath("DebugRayCast:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 0,
+"values": [ Vector3( 0.994431, 32.7137, 104.604 ) ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "RayCastSwipe"
+length = 2.0
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("DebugRayCast:rotation_degrees")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 0.994431, 32.7137, 98.1668 ), Vector3( 0.994431, 32.7137, 115.208 ) ]
+}
 
 [node name="Spatial" type="Spatial"]
 
@@ -17,14 +50,29 @@ theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
 
-[node name="DebugCollisionPolygon" type="CollisionPolygon" parent="."]
+[node name="StaticBody" type="StaticBody" parent="."]
+
+[node name="DebugCollisionPolygon" type="CollisionPolygon" parent="StaticBody"]
 transform = Transform( 0.996614, 0, -0.0822168, 0.0581695, 0.706699, 0.705118, 0.0581026, -0.707514, 0.704306, -1.42375, 0.0929604, -0.0260937 )
-polygon = PoolVector2Array( 1.90034, 1.34453, 1.14364, 1.74429, 0, 1, -0.547082, -0.0644262, 1.04186, -0.340657 )
+polygon = PoolVector2Array( 1.69409, 0.890319, 0.958118, 1.3108, 0, 1, -0.547082, -0.0644262, 1.04186, -0.340657 )
 script = ExtResource( 3 )
 palette = 1
-theme = 0
+theme = 1
+theme_fresnel_power = 0.46
+theme_edge_intensity = 0.213
+
+[node name="DebugRayCast" type="RayCast" parent="."]
+transform = Transform( -0.203067, -0.816563, 0.54036, 0.967545, -0.252099, -0.0173552, 0.150396, 0.519299, 0.841254, -1.93354, 0.698811, 0.479176 )
+enabled = true
+cast_to = Vector3( 0, -2.735, 0 )
+script = ExtResource( 4 )
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.924619, 0.380893, 0, -0.380893, 0.924619, -0.777579, 1.65078, 3.27181 )
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+autoplay = "RayCastSwipe"
+anims/RESET = SubResource( 2 )
+anims/RayCastSwipe = SubResource( 3 )

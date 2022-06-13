@@ -56,6 +56,17 @@ static func draw_polyline_dashed(
 		)
 
 
+static func draw_meshes(primitive_type: int, arrays: Array, material_RID: RID, scenario_RID: RID) -> Dictionary:
+	var result := {"resources": [], "instances": []}
+	for array in arrays:
+		var mesh_RID := VisualServer.mesh_create()
+		VisualServer.mesh_add_surface_from_arrays(mesh_RID, primitive_type, array)
+		VisualServer.mesh_surface_set_material(mesh_RID, 0, material_RID)
+		result.instances.push_back(VisualServer.instance_create2(mesh_RID, scenario_RID))
+		result.resources.push_back(mesh_RID)
+	return result
+
+
 static func get_curve_circle(radius: float, sample := 24, transform := Transform2D.IDENTITY) -> Curve2D:
 	var result := Curve2D.new()
 	var step = TAU / sample

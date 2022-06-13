@@ -54,6 +54,7 @@ var is_implemented := false
 func _init(node: Node2D) -> void:
 	_node = node
 	_node.material = ShaderMaterial.new()
+	is_implemented = _node is CollisionPolygon2D
 
 
 func get_shader(key) -> Shader:

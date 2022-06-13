@@ -41,7 +41,6 @@ var _previous_palette: int = DebugPalette.Type.INTERACT
 var material := ShaderMaterial.new()
 var rids := {"resources": [], "instances": []}
 var is_implemented := false
-var is_ready := false
 var palette: int = _previous_palette
 var theme: int = ThemeType.HALO
 var theme_fresnel_power := 1.0
@@ -50,15 +49,7 @@ var theme_edge_intensity := 0.5
 
 func _init(node: Spatial) -> void:
 	_node = node
-
-
-func setup() -> void:
-	_node.set_notify_transform(true)
-	is_ready = true
-	_set_palette(palette)
-	_set_theme(theme)
-	_set_theme_fresnel_power(theme_fresnel_power)
-	_set_theme_edge_intensity(theme_edge_intensity)
+	is_implemented = _node is CollisionPolygon
 
 
 func get_shader() -> Shader:
@@ -98,6 +89,7 @@ func set_property(name: String, value) -> bool:
 
 
 func set_visible(new_visible: bool) -> void:
+	_node.set_notify_transform(new_visible)
 	for rid in rids.instances:
 		VisualServer.instance_set_visible(rid, new_visible)
 
@@ -124,7 +116,7 @@ func _set_palette(new_palette: int) -> bool:
 func _set_theme(new_theme: int) -> bool:
 	theme = new_theme
 	material.shader = get_shader()
-	is_ready and _node.refresh()
+	_node.is_inside_tree() and _node.refresh()
 	return true
 
 

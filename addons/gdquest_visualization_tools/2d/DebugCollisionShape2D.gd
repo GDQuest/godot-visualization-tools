@@ -16,9 +16,6 @@ func _ready() -> void:
 
 func _draw() -> void:
 	_theme.is_implemented = false
-	if not Engine.editor_hint and not get_tree().debug_collisions_hint:
-		return
-
 	material.shader = _theme.get_shader(shape.get_class())
 	match _theme.theme:
 		DebugCollisionTheme.ThemeType.SIMPLE, DebugCollisionTheme.ThemeType.DASHED:

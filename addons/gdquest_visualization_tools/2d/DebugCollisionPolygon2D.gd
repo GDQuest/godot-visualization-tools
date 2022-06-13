@@ -15,15 +15,10 @@ func _ready() -> void:
 
 
 func _draw() -> void:
-	_theme.is_implemented = false
-	if not Engine.editor_hint and not get_tree().debug_collisions_hint:
-		return
-
-	_theme.is_implemented = true
 	material.shader = _theme.get_shader(get_class())
 	match _theme.theme:
 		DebugCollisionTheme.ThemeType.SIMPLE, DebugCollisionTheme.ThemeType.DASHED:
-			if _theme.is_implemented and _theme.theme_width != 0:
+			if _theme.theme_width != 0:
 				_draw_collisionpolygon2d()
 
 		DebugCollisionTheme.ThemeType.HALO:

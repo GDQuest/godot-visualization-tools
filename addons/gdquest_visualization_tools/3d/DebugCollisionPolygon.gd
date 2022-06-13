@@ -9,10 +9,9 @@ var _theme := DebugCollisionTheme.new(self)
 
 
 func _ready() -> void:
+	set_notify_transform(true)
 	if not Engine.editor_hint:
 		add_to_group("GVTCollision")
-	_theme.setup()
-	_theme.is_implemented = true
 
 
 func _enter_tree() -> void:

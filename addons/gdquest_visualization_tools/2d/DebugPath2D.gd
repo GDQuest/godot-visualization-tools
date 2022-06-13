@@ -31,7 +31,7 @@ func _ready() -> void:
 
 func _draw() -> void:
 	var points := curve.get_baked_points()
-	if points.empty() or not Engine.editor_hint and not get_tree().debug_navigation_hint:
+	if points.empty():
 		return
 
 	VisualServer.canvas_item_clear(get_canvas_item())
