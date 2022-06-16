@@ -25,6 +25,6 @@ func _on_EditorInspector_property_edited(property: String) -> void:
 		"shape":
 			var selected_nodes := get_editor_interface().get_selection().get_selected_nodes()
 			for node in selected_nodes:
-				if node is CollisionShape:
+				if node is DebugCollisionShape or node is DebugCollisionPolygon or node is DebugRayCast:
 					node.refresh()
 					node.property_list_changed_notify()

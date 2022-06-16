@@ -54,7 +54,7 @@ theme_edge_intensity = 0.5
 
 [node name="DebugCollisionPolygon" type="CollisionPolygon" parent="StaticBody"]
 transform = Transform( 0.996614, 0, -0.0822168, 0.0581695, 0.706699, 0.705118, 0.0581026, -0.707514, 0.704306, -1.42375, 0.0929604, -0.0260937 )
-polygon = PoolVector2Array( 1.69409, 0.890319, 0.958118, 1.3108, 0, 1, -0.547082, -0.0644262, 1.04186, -0.340657 )
+polygon = PoolVector2Array( 1.22253, 0.613696, 0.465087, 0.708311, 0, 1, -0.547082, -0.0644262, 1.04186, -0.340657 )
 script = ExtResource( 3 )
 palette = 1
 theme = 1
@@ -62,10 +62,14 @@ theme_fresnel_power = 0.46
 theme_edge_intensity = 0.213
 
 [node name="DebugRayCast" type="RayCast" parent="."]
-transform = Transform( -0.203067, -0.816563, 0.54036, 0.967545, -0.252099, -0.0173552, 0.150396, 0.519299, 0.841254, -1.93354, 0.698811, 0.479176 )
+transform = Transform( -0.203067, -0.816563, 0.54036, 0.967545, -0.252099, -0.0173552, 0.150396, 0.519299, 0.841254, -2.06551, 1.10503, 0.572319 )
 enabled = true
-cast_to = Vector3( 0, -2.735, 0 )
+cast_to = Vector3( -1.084, -2.186, -0.066 )
 script = ExtResource( 4 )
+palette = 1
+theme = 1
+theme_fresnel_power = 0.201
+theme_edge_intensity = 1.073
 
 [node name="Camera" type="Camera" parent="."]
 transform = Transform( 1, 0, 0, 0, 0.924619, 0.380893, 0, -0.380893, 0.924619, -0.777579, 1.65078, 3.27181 )

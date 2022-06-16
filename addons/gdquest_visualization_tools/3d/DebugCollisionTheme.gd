@@ -49,7 +49,11 @@ var theme_edge_intensity := 0.5
 
 func _init(node: Spatial) -> void:
 	_node = node
-	is_implemented = _node is CollisionPolygon
+	is_implemented = _node is CollisionPolygon or _node is RayCast
+	_set_palette(palette)
+	_set_theme(theme)
+	_set_theme_fresnel_power(theme_fresnel_power)
+	_set_theme_edge_intensity(theme_edge_intensity)
 
 
 func get_shader() -> Shader:
@@ -100,9 +104,14 @@ func _set_disabled_effect() -> void:
 	material.set_shader_param("color", DebugPalette.COLORS[palette])
 
 
-func _set_disabled(new_is_disabled: bool) -> bool:
-	palette = DebugPalette.Type.DISABLED if new_is_disabled else _previous_palette
+func _set_disabled(new_disabled: bool) -> bool:
+	palette = DebugPalette.Type.DISABLED if new_disabled else _previous_palette
 	_set_disabled_effect()
+	return false
+
+
+func _set_enabled(new_enabled: bool) -> bool:
+	_set_disabled(not new_enabled)
 	return false
 
 

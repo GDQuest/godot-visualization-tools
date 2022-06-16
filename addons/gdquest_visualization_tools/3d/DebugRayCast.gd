@@ -7,18 +7,11 @@ const DebugUtils := preload("../DebugUtils.gd")
 const DebugPalette := preload("../DebugPalette.gd")
 const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
 
-export(DebugPalette.Type) var palette := DebugPalette.Type.INTERACT setget set_palette
-export(DebugCollisionTheme.ThemeType) var theme := DebugCollisionTheme.ThemeType.HALO setget set_theme
-
-var _rids := {"resources": [], "instances": []}
-var _previous_palette: int = palette
-var _material := ShaderMaterial.new()
+var _theme := DebugCollisionTheme.new(self)
 var _cast_to := cast_to
 
 
 func _ready() -> void:
-	set_palette(palette)
-	set_theme(theme)
 	set_notify_transform(true)
 	if not Engine.editor_hint:
 		add_to_group("GVTCollision")
@@ -29,56 +22,59 @@ func _enter_tree() -> void:
 
 
 func _exit_tree() -> void:
-	_free()
+	_theme.free_rids()
 
 
 func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_TRANSFORM_CHANGED:
 			var xform := global_transform
-			match theme:
+			var global_cast_to: Vector3 = xform.xform(_cast_to)
+			var global_cast_to_normal = Vector3(global_cast_to.z, global_cast_to.z, -global_cast_to.x - global_cast_to.y)
+			if global_cast_to_normal.is_equal_approx(Vector3.ZERO):
+				global_cast_to_normal = Vector3(-global_cast_to.y - global_cast_to.z, global_cast_to.x, global_cast_to.x)
+			xform = xform.looking_at(global_cast_to, global_cast_to_normal)
+
+			match _theme.theme:
 				DebugCollisionTheme.ThemeType.WIREFRAME:
-					if not _rids.instances.empty():
-						xform.origin = Vector3.ZERO
-						xform = xform.rotated(transform.basis.x, PI / 2)
-						xform.origin = global_transform.origin
-						VisualServer.instance_set_transform(_rids.instances[0], xform)
-						VisualServer.instance_set_transform(_rids.instances[1], transform.translated(_cast_to.length() * Vector3.DOWN))
-#					for rid in _rids.instances:
-#						VisualServer.instance_set_transform(rid, xform)
-#						xform = transform.translated(_cast_to.length() * Vector3.DOWN)
+					if not _theme.rids.instances.empty():
+						xform = xform.translated(_cast_to.length() * Vector3.FORWARD)
+						for rid in _theme.rids.instances:
+							VisualServer.instance_set_transform(rid, xform)
+							VisualServer.instance_set_transform(rid, xform)
 
 				DebugCollisionTheme.ThemeType.HALO:
+					xform.origin = Vector3.ZERO
+					xform = xform.rotated(xform.basis.x, PI / 2)
+					xform.origin = global_transform.origin
 					var midway: Vector3 = 0.5 * _cast_to.length() * Vector3.DOWN
-					for rid in _rids.instances:
+					for rid in _theme.rids.instances:
 						xform = xform.translated(midway)
 						VisualServer.instance_set_transform(rid, xform)
 
 
 func _physics_process(delta: float) -> void:
 	if is_colliding():
-		_material.set_shader_param("color", DebugPalette.COLORS[palette].contrasted())
+		_theme.material.set_shader_param("color", DebugPalette.COLORS[_theme.palette].contrasted())
 		_cast_to = transform.xform_inv(get_collision_point())
 	else:
-		_material.set_shader_param("color", DebugPalette.COLORS[palette])
+		_theme.material.set_shader_param("color", DebugPalette.COLORS[_theme.palette])
 		_cast_to = cast_to
 	_draw()
 
 
-func _free() -> void:
-	for key in _rids:
-		for rid in _rids[key]:
-			funcref(VisualServer, "free_rid").call_func(rid)
-		_rids[key].clear()
+func refresh() -> void:
+	_draw()
+	property_list_changed_notify()
 
 
 func _draw() -> void:
 	if not visible:
 		return
 
-	_free()
+	_theme.free_rids()
 	var meshes_info := {"arrays": []}
-	match theme:
+	match _theme.theme:
 		DebugCollisionTheme.ThemeType.WIREFRAME:
 			var shape: Shape = RayShape.new()
 			shape.length = _cast_to.length()
@@ -107,38 +103,26 @@ func _draw() -> void:
 			meshes_info.primitive_type = VisualServer.PRIMITIVE_TRIANGLES
 
 	if not meshes_info.arrays.empty():
-		_rids = DebugUtils.draw_meshes(meshes_info.primitive_type, meshes_info.arrays, _material.get_rid(), get_world().scenario)
+		_theme.rids = DebugUtils.draw_meshes(meshes_info.primitive_type, meshes_info.arrays, _theme.material.get_rid(), get_world().scenario)
 		_notification(NOTIFICATION_TRANSFORM_CHANGED)
 
 
-func _set_enabled_effect() -> void:
-	_material.set_shader_param("color", DebugPalette.COLORS[palette])
-	if palette != DebugPalette.Type.DISABLED:
-		_previous_palette = palette
+func _get(property: String):
+	return _theme.get_property(property)
+
+
+func _get_property_list() -> Array:
+	return _theme.get_property_list()
 
 
 func _set(property: String, value) -> bool:
+	var result := false
 	match property:
 		"visible": set_visible(value)
-		"enabled":
-			palette = _previous_palette if value else DebugPalette.Type.DISABLED
-			_set_enabled_effect()
-	return false
-
-
-func set_palette(new_palette: int) -> void:
-	palette = new_palette
-	set_deferred("enabled", palette != DebugPalette.Type.DISABLED)
-	_set_enabled_effect()
-
-
-func set_theme(new_theme: int) -> void:
-	theme = new_theme
-	_material.shader = DebugCollisionTheme.SHADERS[theme]
+		_: result = _theme != null and _theme.set_property(property, value)
+	return result
 
 
 func set_visible(new_visible: bool) -> void:
 	visible = new_visible
-	set_notify_transform(visible)
-	for rid in _rids.instances:
-		VisualServer.instance_set_visible(rid, visible)
+	_theme.set_visible(new_visible)

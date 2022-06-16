@@ -97,8 +97,8 @@ func _set_disabled_effect() -> void:
 	_node.update()
 
 
-func _set_disabled(new_is_disabled: bool) -> bool:
-	palette = DebugPalette.Type.DISABLED if new_is_disabled else _previous_palette
+func _set_disabled(new_disabled: bool) -> bool:
+	palette = DebugPalette.Type.DISABLED if new_disabled else _previous_palette
 	_set_disabled_effect()
 	return false
 
