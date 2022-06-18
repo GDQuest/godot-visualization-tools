@@ -29,6 +29,11 @@ _global_script_classes=[ {
 "language": "GDScript",
 "path": "res://addons/gdquest_visualization_tools/2d/DebugCollisionShape2D.gd"
 }, {
+"base": "Path",
+"class": "DebugPath",
+"language": "GDScript",
+"path": "res://addons/gdquest_visualization_tools/3d/DebugPath.gd"
+}, {
 "base": "Path2D",
 "class": "DebugPath2D",
 "language": "GDScript",
@@ -49,6 +54,7 @@ _global_script_class_icons={
 "DebugCollisionPolygon2D": "",
 "DebugCollisionShape": "",
 "DebugCollisionShape2D": "",
+"DebugPath": "",
 "DebugPath2D": "",
 "DebugRayCast": "",
 "DebugRayCast2D": ""

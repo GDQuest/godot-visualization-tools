@@ -1,11 +1,18 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=10 format=2]
 
 [ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionShape.gd" type="Script" id=1]
 [ext_resource path="res://UI.tscn" type="PackedScene" id=2]
 [ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionPolygon.gd" type="Script" id=3]
 [ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugRayCast.gd" type="Script" id=4]
+[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugPath.gd" type="Script" id=5]
 
 [sub_resource type="BoxShape" id=1]
+
+[sub_resource type="Curve3D" id=4]
+_data = {
+"points": PoolVector3Array( 0, 0, 0, 0, 0, 0, -1.21821, 0, 1.34478, -0.754274, 0, 0.260457, 0.754274, 0, -0.260457, -1.0111, -0.232236, -2.02386, 0, 0, 0, 0, 0, 0, 0.703482, 0.574352, -2.93979, 0, 0, 0, 0, 0, 0, 2.21882, -0.31626, 0.591251 ),
+"tilts": PoolRealArray( 0, 0, 0, 0 )
+}
 
 [sub_resource type="Animation" id=2]
 length = 0.001
@@ -41,6 +48,9 @@ tracks/0/keys = {
 
 [node name="Spatial" type="Spatial"]
 
+[node name="Camera" type="Camera" parent="."]
+transform = Transform( 1, 0, 0, 0, 0.924619, 0.380893, 0, -0.380893, 0.924619, -0.777579, 1.65078, 3.27181 )
+
 [node name="DebugCollisionShape" type="CollisionShape" parent="."]
 transform = Transform( 0.419347, 0.376434, -0.826103, -0.236343, 0.923869, 0.301011, 0.876521, 0.0690159, 0.476389, 1.06043, 0, 0 )
 shape = SubResource( 1 )
@@ -68,11 +78,13 @@ cast_to = Vector3( -1.084, -2.186, -0.066 )
 script = ExtResource( 4 )
 palette = 1
 theme = 1
-theme_fresnel_power = 0.201
-theme_edge_intensity = 1.073
+theme_fresnel_power = 0.678
+theme_edge_intensity = 0.627
 
-[node name="Camera" type="Camera" parent="."]
-transform = Transform( 1, 0, 0, 0, 0.924619, 0.380893, 0, -0.380893, 0.924619, -0.777579, 1.65078, 3.27181 )
+[node name="DebugPath" type="Path" parent="."]
+curve = SubResource( 4 )
+script = ExtResource( 5 )
+theme = 0
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
 

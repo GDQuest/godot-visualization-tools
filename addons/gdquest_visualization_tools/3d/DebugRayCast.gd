@@ -5,9 +5,9 @@ extends RayCast
 
 const DebugUtils := preload("../DebugUtils.gd")
 const DebugPalette := preload("../DebugPalette.gd")
-const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+const DebugTheme := preload("DebugTheme.gd")
 
-var _theme := DebugCollisionTheme.new(self)
+var _theme := DebugTheme.new(self)
 var _cast_to := cast_to
 
 
@@ -30,20 +30,18 @@ func _notification(what: int) -> void:
 		NOTIFICATION_TRANSFORM_CHANGED:
 			var xform := global_transform
 			var global_cast_to: Vector3 = xform.xform(_cast_to)
-			var global_cast_to_normal = Vector3(global_cast_to.z, global_cast_to.z, -global_cast_to.x - global_cast_to.y)
-			if global_cast_to_normal.is_equal_approx(Vector3.ZERO):
-				global_cast_to_normal = Vector3(-global_cast_to.y - global_cast_to.z, global_cast_to.x, global_cast_to.x)
+			var global_cast_to_normal = DebugUtils.v3normal(global_cast_to)
 			xform = xform.looking_at(global_cast_to, global_cast_to_normal)
 
 			match _theme.theme:
-				DebugCollisionTheme.ThemeType.WIREFRAME:
+				DebugTheme.ThemeType.WIREFRAME:
 					if not _theme.rids.instances.empty():
 						xform = xform.translated(_cast_to.length() * Vector3.FORWARD)
 						for rid in _theme.rids.instances:
 							VisualServer.instance_set_transform(rid, xform)
 							VisualServer.instance_set_transform(rid, xform)
 
-				DebugCollisionTheme.ThemeType.HALO:
+				DebugTheme.ThemeType.HALO:
 					xform.origin = Vector3.ZERO
 					xform = xform.rotated(xform.basis.x, PI / 2)
 					xform.origin = global_transform.origin
@@ -72,10 +70,9 @@ func _draw() -> void:
 	if not visible:
 		return
 
-	_theme.free_rids()
 	var meshes_info := {"arrays": []}
 	match _theme.theme:
-		DebugCollisionTheme.ThemeType.WIREFRAME:
+		DebugTheme.ThemeType.WIREFRAME:
 			var shape: Shape = RayShape.new()
 			shape.length = _cast_to.length()
 			var mesh := shape.get_debug_mesh()
@@ -84,9 +81,9 @@ func _draw() -> void:
 				shape = SphereShape.new()
 				shape.radius = 0.03
 				meshes_info.arrays.push_back(shape.get_debug_mesh().surface_get_arrays(0))
-				meshes_info.primitive_type = VisualServer.PRIMITIVE_LINES
+				meshes_info.primitive_types = [VisualServer.PRIMITIVE_LINES]
 
-		DebugCollisionTheme.ThemeType.HALO:
+		DebugTheme.ThemeType.HALO:
 			var mesh: PrimitiveMesh = CylinderMesh.new()
 			mesh.top_radius = 0.01
 			mesh.bottom_radius = mesh.top_radius
@@ -100,10 +97,10 @@ func _draw() -> void:
 			mesh.radial_segments = 16
 			mesh.rings = 8
 			meshes_info.arrays.push_back(mesh.get_mesh_arrays())
-			meshes_info.primitive_type = VisualServer.PRIMITIVE_TRIANGLES
+			meshes_info.primitive_types = [VisualServer.PRIMITIVE_TRIANGLES, VisualServer.PRIMITIVE_TRIANGLES]
 
 	if not meshes_info.arrays.empty():
-		_theme.rids = DebugUtils.draw_meshes(meshes_info.primitive_type, meshes_info.arrays, _theme.material.get_rid(), get_world().scenario)
+		_theme.draw_meshes(meshes_info)
 		_notification(NOTIFICATION_TRANSFORM_CHANGED)
 
 

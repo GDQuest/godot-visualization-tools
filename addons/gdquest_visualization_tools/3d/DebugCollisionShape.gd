@@ -3,10 +3,9 @@ class_name DebugCollisionShape
 extends CollisionShape
 
 
-const DebugUtils := preload("../DebugUtils.gd")
-const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+const DebugTheme := preload("DebugTheme.gd")
 
-var _theme := DebugCollisionTheme.new(self)
+var _theme := DebugTheme.new(self)
 
 
 func _ready() -> void:
@@ -31,11 +30,11 @@ func _notification(what: int) -> void:
 		NOTIFICATION_TRANSFORM_CHANGED:
 			var xform := global_transform
 			match [shape.get_class(), _theme.theme]:
-				["RayShape", DebugCollisionTheme.ThemeType.WIREFRAME]:
+				["RayShape", DebugTheme.ThemeType.WIREFRAME]:
 					for rid in _theme.rids.instances:
 						VisualServer.instance_set_transform(rid, xform)
 						xform = transform.translated(shape.length * Vector3.BACK)
-				["RayShape", DebugCollisionTheme.ThemeType.HALO]:
+				["RayShape", DebugTheme.ThemeType.HALO]:
 					xform.origin = Vector3.ZERO
 					xform = xform.rotated(global_transform.basis.x, PI / 2)
 					xform.origin = global_transform.origin
@@ -59,65 +58,79 @@ func refresh() -> void:
 	property_list_changed_notify()
 
 
-func _update_boxshape() -> Array:
+func _update_boxshape() -> Dictionary:
 	var mesh := CubeMesh.new()
 	mesh.size = 2 * shape.extents
-	return [mesh.get_mesh_arrays()]
+	return {
+		"primitive_types": [VisualServer.PRIMITIVE_TRIANGLES],
+		"arrays": [mesh.get_mesh_arrays()]
+	}
 
 
-func _update_cylindershape() -> Array:
+func _update_cylindershape() -> Dictionary:
 	var mesh := CylinderMesh.new()
 	mesh.top_radius = shape.radius
 	mesh.bottom_radius = shape.radius
 	mesh.height = shape.height
 	mesh.radial_segments = 32
 	mesh.rings = 0
-	return [mesh.get_mesh_arrays()]
+	return {
+		"primitive_types": [VisualServer.PRIMITIVE_TRIANGLES],
+		"arrays": [mesh.get_mesh_arrays()]
+	}
 
 
-func _update_capsuleshape() -> Array:
+func _update_capsuleshape() -> Dictionary:
 	var mesh := CapsuleMesh.new()
 	mesh.radius = shape.radius
 	mesh.mid_height = shape.height
 	mesh.radial_segments = 32
-	return [mesh.get_mesh_arrays()]
+	return {
+		"primitive_types": [VisualServer.PRIMITIVE_TRIANGLES],
+		"arrays": [mesh.get_mesh_arrays()]
+	}
 
 
-func _update_rayshape() -> Array:
-	var result := []
+func _update_rayshape() -> Dictionary:
+	var result := {
+		"primitive_types": [VisualServer.PRIMITIVE_TRIANGLES, VisualServer.PRIMITIVE_TRIANGLES],
+		"arrays": []
+	}
 	var mesh: PrimitiveMesh = CylinderMesh.new()
 	mesh.top_radius = 0.01
 	mesh.bottom_radius = mesh.top_radius
 	mesh.height = shape.length
 	mesh.radial_segments = 4
 	mesh.rings = 0
-	result.push_back(mesh.get_mesh_arrays())
+	result.arrays.push_back(mesh.get_mesh_arrays())
 
 	mesh = SphereMesh.new()
 	mesh.radius = 0.03
 	mesh.height = 2 * mesh.radius
 	mesh.radial_segments = 16
 	mesh.rings = 8
-	result.push_back(mesh.get_mesh_arrays())
+	result.arrays.push_back(mesh.get_mesh_arrays())
 	return result
 
 
-func _update_sphereshape() -> Array:
+func _update_sphereshape() -> Dictionary:
 	var mesh := SphereMesh.new()
 	mesh.radius = shape.radius
 	mesh.height = 2 * shape.radius
 	mesh.radial_segments = 32
 	mesh.rings = 16
-	return [mesh.get_mesh_arrays()]
+	return {
+		"primitive_types": [VisualServer.PRIMITIVE_TRIANGLES],
+		"arrays": [mesh.get_mesh_arrays()]
+	}
 
 
-func _draw_meshes(mesh_info: Dictionary) -> void:
+func _draw_meshes(meshes_info: Dictionary) -> void:
 	var world := get_world()
-	if mesh_info.empty() or world == null:
+	if meshes_info.empty() or world == null:
 		return
 
-	_theme.free_rids()
-	_theme.rids = DebugUtils.draw_meshes(mesh_info.primitive_type, mesh_info.arrays, _theme.material.get_rid(), world.scenario)
+	_theme.draw_meshes(meshes_info)
 	_notification(NOTIFICATION_TRANSFORM_CHANGED)
 
 
@@ -126,11 +139,11 @@ func _draw() -> void:
 	_theme.is_implemented = has_method(method_name)
 	var meshes_info := {}
 	match [_theme.is_implemented, _theme.theme]:
-		[_, DebugCollisionTheme.ThemeType.WIREFRAME]:
+		[_, DebugTheme.ThemeType.WIREFRAME]:
 			var mesh := shape.get_debug_mesh()
 			if mesh.get_surface_count() > 0:
 				meshes_info = {
-					"primitive_type": VisualServer.PRIMITIVE_LINES,
+					"primitive_types": [VisualServer.PRIMITIVE_LINES],
 					"arrays": [mesh.surface_get_arrays(0)]
 				}
 
@@ -138,11 +151,8 @@ func _draw() -> void:
 					var sphere_shape := SphereShape.new()
 					sphere_shape.radius = 0.03
 					meshes_info.arrays.append(sphere_shape.get_debug_mesh().surface_get_arrays(0))
-		[true, DebugCollisionTheme.ThemeType.HALO]:
-			meshes_info = {
-				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
-				"arrays": funcref(self, method_name).call_func()
-			}
+		[true, DebugTheme.ThemeType.HALO]:
+			meshes_info = funcref(self, method_name).call_func()
 	_draw_meshes(meshes_info)
 
 

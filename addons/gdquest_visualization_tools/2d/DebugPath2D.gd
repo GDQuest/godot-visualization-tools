@@ -5,9 +5,9 @@ extends Path2D
 
 const DebugPalette := preload("../DebugPalette.gd")
 
+const TRIANGLE_COG_DISTANCE := 10
 const DEFAULT_THEME_WIDTH := 4
 const COLOR := DebugPalette.COLORS[DebugPalette.Type.INTERACT]
-const TRIANGLE_COG_DISTANCE := 10
 
 export(int, 1, 10) var width := DEFAULT_THEME_WIDTH setget set_width
 export(float, 1, 500) var spread := 100.0 setget set_spread

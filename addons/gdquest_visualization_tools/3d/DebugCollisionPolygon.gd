@@ -3,9 +3,9 @@ class_name DebugCollisionPolygon
 extends CollisionPolygon
 
 
-const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+const DebugTheme := preload("DebugTheme.gd")
 
-var _theme := DebugCollisionTheme.new(self)
+var _theme := DebugTheme.new(self)
 
 
 func _ready() -> void:
@@ -42,7 +42,7 @@ func _draw() -> void:
 	_theme.free_rids()
 	var is_drawn := false
 	match _theme.theme:
-		DebugCollisionTheme.ThemeType.WIREFRAME:
+		DebugTheme.ThemeType.WIREFRAME:
 			var complete_polygon := []
 			for point in polygon:
 				for direction in [-1, 1]:
@@ -56,7 +56,7 @@ func _draw() -> void:
 				VisualServer.mesh_surface_set_material(_theme.rids.resources[0], 0, _theme.material.get_rid())
 				is_drawn = true
 
-		DebugCollisionTheme.ThemeType.HALO:
+		DebugTheme.ThemeType.HALO:
 			_theme.rids.resources.push_back(VisualServer.immediate_create())
 			for direction in [-1, 1]:
 				VisualServer.immediate_begin(_theme.rids.resources[0], VisualServer.PRIMITIVE_TRIANGLE_FAN)

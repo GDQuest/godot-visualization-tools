@@ -49,15 +49,11 @@ var theme_edge_intensity := 0.5
 
 func _init(node: Spatial) -> void:
 	_node = node
-	is_implemented = _node is CollisionPolygon or _node is RayCast
+	is_implemented = _node is CollisionPolygon or _node is RayCast or _node is Path
 	_set_palette(palette)
 	_set_theme(theme)
 	_set_theme_fresnel_power(theme_fresnel_power)
 	_set_theme_edge_intensity(theme_edge_intensity)
-
-
-func get_shader() -> Shader:
-	return SHADERS[theme]
 
 
 func free_rids() -> void:
@@ -67,8 +63,22 @@ func free_rids() -> void:
 		rids[key].clear()
 
 
+func draw_meshes(meshes_info: Dictionary) -> void:
+	free_rids()
+	for index in range(meshes_info.arrays.size()):
+		var mesh_RID := VisualServer.mesh_create()
+		VisualServer.mesh_add_surface_from_arrays(mesh_RID, meshes_info.primitive_types[index], meshes_info.arrays[index])
+		VisualServer.mesh_surface_set_material(mesh_RID, 0, material.get_rid())
+		rids.instances.push_back(VisualServer.instance_create2(mesh_RID, _node.get_world().scenario))
+		rids.resources.push_back(mesh_RID)
+
+
+func get_shader() -> Shader:
+	return SHADERS[theme]
+
+
 func get_property_list() -> Array:
-	var result := [palette_property]
+	var result := [] if _node is Path else [palette_property]
 	match [is_implemented, theme]:
 		[false, ThemeType.HALO]:
 			_set_theme(ThemeType.WIREFRAME)
