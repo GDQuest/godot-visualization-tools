@@ -69,8 +69,8 @@ polygon = PoolVector2Array( 1.22253, 0.613696, 0.465087, 0.708311, 0, 1, -0.5470
 script = ExtResource( 3 )
 palette = 1
 theme = 1
-theme_fresnel_power = 0.46
-theme_edge_intensity = 0.213
+theme_fresnel_power = 0.111
+theme_edge_intensity = 0.95
 
 [node name="DebugRayCast" type="RayCast" parent="."]
 transform = Transform( -0.203067, -0.816563, 0.54036, 0.967545, -0.252099, -0.0173552, 0.150396, 0.519299, 0.841254, -2.06551, 1.10503, 0.572319 )
@@ -85,9 +85,7 @@ theme_edge_intensity = 0.627
 [node name="DebugPath" type="Path" parent="."]
 curve = SubResource( 4 )
 script = ExtResource( 5 )
-theme = 1
-theme_fresnel_power = 1.0
-theme_edge_intensity = 0.5
+theme = 0
 
 [node name="UI" parent="." instance=ExtResource( 2 )]
 

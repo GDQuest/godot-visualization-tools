@@ -70,18 +70,23 @@ func _draw() -> void:
 	if not visible:
 		return
 
-	var meshes_info := {"arrays": []}
+	var meshes_info := []
 	match _theme.theme:
 		DebugTheme.ThemeType.WIREFRAME:
 			var shape: Shape = RayShape.new()
 			shape.length = _cast_to.length()
 			var mesh := shape.get_debug_mesh()
 			if mesh.get_surface_count() > 0:
-				meshes_info.arrays.push_back(mesh.surface_get_arrays(0))
+				meshes_info.push_back({
+					"primitive_type": VisualServer.PRIMITIVE_LINES,
+					"arrays": mesh.surface_get_arrays(0)
+				})
 				shape = SphereShape.new()
 				shape.radius = 0.03
-				meshes_info.arrays.push_back(shape.get_debug_mesh().surface_get_arrays(0))
-				meshes_info.primitive_types = [VisualServer.PRIMITIVE_LINES]
+				meshes_info.push_back({
+					"primitive_type": VisualServer.PRIMITIVE_LINES,
+					"arrays": shape.get_debug_mesh().surface_get_arrays(0)
+				})
 
 		DebugTheme.ThemeType.HALO:
 			var mesh: PrimitiveMesh = CylinderMesh.new()
@@ -90,16 +95,21 @@ func _draw() -> void:
 			mesh.height = _cast_to.length()
 			mesh.radial_segments = 4
 			mesh.rings = 0
-			meshes_info.arrays.push_back(mesh.get_mesh_arrays())
+			meshes_info.push_back({
+				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
+				"arrays": mesh.get_mesh_arrays()
+			})
 			mesh = SphereMesh.new()
 			mesh.radius = 0.03
 			mesh.height = 2 * mesh.radius
 			mesh.radial_segments = 16
 			mesh.rings = 8
-			meshes_info.arrays.push_back(mesh.get_mesh_arrays())
-			meshes_info.primitive_types = [VisualServer.PRIMITIVE_TRIANGLES, VisualServer.PRIMITIVE_TRIANGLES]
+			meshes_info.push_back({
+				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
+				"arrays": mesh.get_mesh_arrays()
+			})
 
-	if not meshes_info.arrays.empty():
+	if not meshes_info.empty():
 		_theme.draw_meshes(meshes_info)
 		_notification(NOTIFICATION_TRANSFORM_CHANGED)
 

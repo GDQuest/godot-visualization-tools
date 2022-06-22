@@ -11,6 +11,7 @@ const DELTA := 0.01
 export(int, 0, 100) var samples := 10 setget set_samples
 
 var _theme := DebugTheme.new(self)
+var _end_sphere_material := _theme.material.duplicate()
 var _spheres := [SphereShape.new(), SphereMesh.new()]
 var _pointer := CylinderMesh.new()
 var _pointer_mesh_RID := RID()
@@ -19,9 +20,10 @@ var _pointer_instance_RID := RID()
 
 
 func _init() -> void:
-	_theme.theme = DebugTheme.ThemeType.WIREFRAME
-	_spheres[0].radius = 0.03
-	_spheres[1].radius = 0.03
+	_end_sphere_material.set_shader_param("fresnel_power", 0.15)
+	_end_sphere_material.set_shader_param("edge_intensity", 1.1)
+	_spheres[0].radius = 0.06
+	_spheres[1].radius = _spheres[0].radius
 	_spheres[1].height = 2 * _spheres[1].radius
 	_spheres[1].radial_segments = 16
 	_spheres[1].rings = 8
@@ -49,20 +51,23 @@ func _notification(what: int) -> void:
 	match what:
 		NOTIFICATION_TRANSFORM_CHANGED:
 			var xform := global_transform
-			VisualServer.instance_set_transform(_theme.rids.instances[0], xform)
 			xform.origin = global_transform.xform(curve.get_point_position(0))
-			VisualServer.instance_set_transform(_theme.rids.instances[1], xform)
+			VisualServer.instance_set_transform(_theme.rids.instances[0], xform)
 			xform.origin = global_transform.xform(curve.get_point_position(curve.get_point_count() - 1))
-			VisualServer.instance_set_transform(_theme.rids.instances[2], xform)
+			VisualServer.instance_set_transform(_theme.rids.instances[1], xform)
+			if _theme.theme == DebugTheme.ThemeType.WIREFRAME:
+				VisualServer.instance_set_transform(_theme.rids.instances[2], global_transform)
 
+			xform = global_transform
 			var unit := curve.get_baked_length() / (samples + 1)
 			var n := samples if _theme.theme == DebugTheme.ThemeType.WIREFRAME else int(curve.get_baked_length() / curve.bake_interval)
 			for index in range(n):
 				var t := (index + 1) * unit if _theme.theme == DebugTheme.ThemeType.WIREFRAME else (index + 0.5) * curve.bake_interval
-				var offset: Vector3 = curve.interpolate_baked(t)
-				var direction: Vector3 = global_transform.xform(offset - curve.interpolate_baked(t - DELTA))
-				xform = global_transform.looking_at(DebugUtils.v3normal(direction), direction)
-				xform.origin = global_transform.xform(offset)
+				var offset1: Vector3 = global_transform.xform(curve.interpolate_baked(t))
+				var offset2: Vector3 = global_transform.xform(curve.interpolate_baked(t - DELTA))
+				var direction := offset1 - offset2
+				xform.origin = offset1
+				xform = xform.looking_at(offset1 + DebugUtils.v3normal(direction), direction)
 				VisualServer.multimesh_instance_set_transform(_pointer_multimesh_RID, index, xform)
 
 
@@ -91,13 +96,16 @@ func _draw() -> void:
 				st.add_vertex(curve.interpolate_baked(sample * curve.bake_interval))
 			st.add_vertex(curve.interpolate_baked(curve.get_baked_length()))
 
-			var meshes_info := {"primitive_types": [], "arrays": []}
-			meshes_info.primitive_types.push_back(VisualServer.PRIMITIVE_LINE_STRIP)
-			meshes_info.arrays.push_back(st.commit_to_arrays())
-			meshes_info.primitive_types.push_back(VisualServer.PRIMITIVE_LINES)
-			meshes_info.arrays.push_back(_spheres[0].get_debug_mesh().surface_get_arrays(0))
-			meshes_info.primitive_types.push_back(VisualServer.PRIMITIVE_TRIANGLES)
-			meshes_info.arrays.push_back(_spheres[1].get_mesh_arrays())
+			var meshes_info := [{
+				"primitive_type": VisualServer.PRIMITIVE_LINES,
+				"arrays": _spheres[0].get_debug_mesh().surface_get_arrays(0)
+			}, {
+				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
+				"arrays": _spheres[1].get_mesh_arrays()
+			}, {
+				"primitive_type": VisualServer.PRIMITIVE_LINE_STRIP,
+				"arrays": st.commit_to_arrays()
+			}]
 			_theme.draw_meshes(meshes_info)
 
 			_pointer.bottom_radius = 0.06
@@ -109,10 +117,21 @@ func _draw() -> void:
 			_pointer_multimesh_RID = VisualServer.multimesh_create()
 			VisualServer.multimesh_set_mesh(_pointer_multimesh_RID, _pointer_mesh_RID)
 			VisualServer.multimesh_allocate(_pointer_multimesh_RID, samples, VisualServer.MULTIMESH_TRANSFORM_3D, VisualServer.MULTIMESH_COLOR_NONE)
+			print(samples)
 			_pointer_instance_RID = VisualServer.instance_create2(_pointer_multimesh_RID, get_world().scenario)
 
 		DebugTheme.ThemeType.HALO:
-			_pointer.bottom_radius = 0.01
+			var meshes_info := [{
+				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
+				"arrays": _spheres[1].get_mesh_arrays()
+			}, {
+				"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
+				"arrays": _spheres[1].get_mesh_arrays(),
+				"material_override": _end_sphere_material
+			}]
+			_theme.draw_meshes(meshes_info)
+
+			_pointer.bottom_radius = 0.03
 			_pointer.top_radius = _pointer.bottom_radius
 			_pointer.height = curve.bake_interval
 			_pointer_mesh_RID = VisualServer.mesh_create()
@@ -150,4 +169,4 @@ func set_visible(new_visible: bool) -> void:
 
 func set_samples(new_samples: int) -> void:
 	samples = new_samples
-	_notification(NOTIFICATION_TRANSFORM_CHANGED)
+	refresh()

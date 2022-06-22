@@ -63,12 +63,13 @@ func free_rids() -> void:
 		rids[key].clear()
 
 
-func draw_meshes(meshes_info: Dictionary) -> void:
+func draw_meshes(meshes_info: Array) -> void:
 	free_rids()
-	for index in range(meshes_info.arrays.size()):
+	for mesh_info in meshes_info:
+		var material_RID: RID = mesh_info.get("material_override", material).get_rid()
 		var mesh_RID := VisualServer.mesh_create()
-		VisualServer.mesh_add_surface_from_arrays(mesh_RID, meshes_info.primitive_types[index], meshes_info.arrays[index])
-		VisualServer.mesh_surface_set_material(mesh_RID, 0, material.get_rid())
+		VisualServer.mesh_add_surface_from_arrays(mesh_RID, mesh_info.primitive_type, mesh_info.arrays)
+		VisualServer.mesh_surface_set_material(mesh_RID, 0, material_RID)
 		rids.instances.push_back(VisualServer.instance_create2(mesh_RID, _node.get_world().scenario))
 		rids.resources.push_back(mesh_RID)
 
