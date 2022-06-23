@@ -70,6 +70,16 @@ func _notification(what: int) -> void:
 				xform = xform.looking_at(offset1 + DebugUtils.v3normal(direction), direction)
 				VisualServer.multimesh_instance_set_transform(_pointer_multimesh_RID, index, xform)
 
+			if _theme.theme == DebugTheme.ThemeType.HALO:
+				var t := n * curve.bake_interval + 0.5 * (curve.get_baked_length() - n * curve.bake_interval)
+				var offset1: Vector3 = global_transform.xform(curve.interpolate_baked(t))
+				var offset2: Vector3 = global_transform.xform(curve.interpolate_baked(t - DELTA))
+				var direction := offset1 - offset2
+				xform.origin = offset1
+				xform = xform.looking_at(offset1 + DebugUtils.v3normal(direction), direction)
+				xform.basis.y *= curve.get_baked_length()/curve.bake_interval - n
+				VisualServer.multimesh_instance_set_transform(_pointer_multimesh_RID, n, xform)
+
 
 func refresh() -> void:
 	_free_pointer_rids()
@@ -117,7 +127,6 @@ func _draw() -> void:
 			_pointer_multimesh_RID = VisualServer.multimesh_create()
 			VisualServer.multimesh_set_mesh(_pointer_multimesh_RID, _pointer_mesh_RID)
 			VisualServer.multimesh_allocate(_pointer_multimesh_RID, samples, VisualServer.MULTIMESH_TRANSFORM_3D, VisualServer.MULTIMESH_COLOR_NONE)
-			print(samples)
 			_pointer_instance_RID = VisualServer.instance_create2(_pointer_multimesh_RID, get_world().scenario)
 
 		DebugTheme.ThemeType.HALO:
@@ -139,7 +148,7 @@ func _draw() -> void:
 			VisualServer.mesh_surface_set_material(_pointer_mesh_RID, 0, _theme.material.get_rid())
 			_pointer_multimesh_RID = VisualServer.multimesh_create()
 			VisualServer.multimesh_set_mesh(_pointer_multimesh_RID, _pointer_mesh_RID)
-			var pointers := int(curve.get_baked_length() / curve.bake_interval)
+			var pointers := int(curve.get_baked_length() / curve.bake_interval) + 1
 			VisualServer.multimesh_allocate(_pointer_multimesh_RID, pointers, VisualServer.MULTIMESH_TRANSFORM_3D, VisualServer.MULTIMESH_COLOR_NONE)
 			_pointer_instance_RID = VisualServer.instance_create2(_pointer_multimesh_RID, get_world().scenario)
 
@@ -164,6 +173,7 @@ func _set(property: String, value) -> bool:
 
 func set_visible(new_visible: bool) -> void:
 	visible = new_visible
+	VisualServer.instance_set_visible(_pointer_instance_RID, visible)
 	_theme.set_visible(new_visible)
 
 
