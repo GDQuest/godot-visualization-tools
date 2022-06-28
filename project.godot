@@ -9,49 +9,55 @@
 config_version=4
 
 _global_script_classes=[ {
+"base": "CollisionPolygon",
+"class": "DebugCollisionPolygon",
+"language": "GDScript",
+"path": "res://addons/gdquest_visualization_tools/3d/DebugCollisionPolygon.gd"
+}, {
 "base": "CollisionPolygon2D",
 "class": "DebugCollisionPolygon2D",
 "language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugCollisionPolygon2D.gd"
+"path": "res://addons/gdquest_visualization_tools/2d/DebugCollisionPolygon2D.gd"
+}, {
+"base": "CollisionShape",
+"class": "DebugCollisionShape",
+"language": "GDScript",
+"path": "res://addons/gdquest_visualization_tools/3d/DebugCollisionShape.gd"
 }, {
 "base": "CollisionShape2D",
 "class": "DebugCollisionShape2D",
 "language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugCollisionShape2D.gd"
+"path": "res://addons/gdquest_visualization_tools/2d/DebugCollisionShape2D.gd"
 }, {
-"base": "Reference",
-"class": "DebugCollisionTheme",
+"base": "Path",
+"class": "DebugPath",
 "language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugCollisionTheme.gd"
-}, {
-"base": "Reference",
-"class": "DebugPalette",
-"language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugPalette.gd"
+"path": "res://addons/gdquest_visualization_tools/3d/DebugPath.gd"
 }, {
 "base": "Path2D",
 "class": "DebugPath2D",
 "language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugPath2D.gd"
+"path": "res://addons/gdquest_visualization_tools/2d/DebugPath2D.gd"
+}, {
+"base": "RayCast",
+"class": "DebugRayCast",
+"language": "GDScript",
+"path": "res://addons/gdquest_visualization_tools/3d/DebugRayCast.gd"
 }, {
 "base": "RayCast2D",
 "class": "DebugRayCast2D",
 "language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugRayCast2D.gd"
-}, {
-"base": "Reference",
-"class": "DebugUtils",
-"language": "GDScript",
-"path": "res://addons/gdquest_visualization_tools/DebugUtils.gd"
+"path": "res://addons/gdquest_visualization_tools/2d/DebugRayCast2D.gd"
 } ]
 _global_script_class_icons={
+"DebugCollisionPolygon": "",
 "DebugCollisionPolygon2D": "",
+"DebugCollisionShape": "",
 "DebugCollisionShape2D": "",
-"DebugCollisionTheme": "",
-"DebugPalette": "",
+"DebugPath": "",
 "DebugPath2D": "",
-"DebugRayCast2D": "",
-"DebugUtils": ""
+"DebugRayCast": "",
+"DebugRayCast2D": ""
 }
 
 [application]

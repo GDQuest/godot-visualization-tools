@@ -12,11 +12,19 @@ func _enter_tree() -> void:
 	)
 
 
+
 func _exit_tree() -> void:
 	remove_autoload_singleton("GDQuestVisualizationTools")
 
 
 func _on_EditorInspector_property_edited(property: String) -> void:
 	match property:
-		"palette", "enabled":
+		"palette", "enabled", "disabled":
 			get_editor_interface().get_inspector().refresh()
+
+		"shape":
+			var selected_nodes := get_editor_interface().get_selection().get_selected_nodes()
+			for node in selected_nodes:
+				if node is DebugCollisionShape or node is DebugCollisionPolygon or node is DebugRayCast:
+					node.refresh()
+					node.property_list_changed_notify()

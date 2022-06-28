@@ -2,17 +2,21 @@ tool
 class_name DebugPath2D
 extends Path2D
 
-enum ThemeType { SIMPLE, DASHED }
 
+const DebugPalette := preload("../DebugPalette.gd")
+
+const TRIANGLE_COG_DISTANCE := 10
 const DEFAULT_THEME_WIDTH := 4
 const COLOR := DebugPalette.COLORS[DebugPalette.Type.INTERACT]
-const TRIANGLE_VERTICES := PoolVector2Array(
-	[12 * Vector2.UP, 12 * Vector2.DOWN, 20 * Vector2.RIGHT]
-)
 
 export(int, 1, 10) var width := DEFAULT_THEME_WIDTH setget set_width
 export(float, 1, 500) var spread := 100.0 setget set_spread
 
+var _triangle_vertices := PoolVector2Array([
+	TRIANGLE_COG_DISTANCE * (Vector2.LEFT + Vector2.UP).normalized(),
+	TRIANGLE_COG_DISTANCE * (Vector2.LEFT + Vector2.DOWN).normalized(),
+	TRIANGLE_COG_DISTANCE * Vector2.RIGHT
+])
 var _xform_scale := width / float(DEFAULT_THEME_WIDTH) * Vector2.ONE
 
 
@@ -20,9 +24,14 @@ func _init() -> void:
 	self_modulate = COLOR
 
 
+func _ready() -> void:
+	if not Engine.editor_hint:
+		add_to_group("GVTNavigation")
+
+
 func _draw() -> void:
 	var points := curve.get_baked_points()
-	if points.empty() or not Engine.editor_hint and not get_tree().debug_navigation_hint:
+	if points.empty():
 		return
 
 	VisualServer.canvas_item_clear(get_canvas_item())
@@ -38,7 +47,7 @@ func _draw() -> void:
 		var direction := offset - curve.interpolate_baked(t - 1)
 		var xform := Transform2D.IDENTITY.scaled(_xform_scale).rotated(direction.angle())
 		xform.origin = offset
-		draw_primitive(xform.xform(TRIANGLE_VERTICES), [Color.white], [])
+		draw_primitive(xform.xform(_triangle_vertices), [Color.white], [])
 
 
 func set_width(new_width: int) -> void:

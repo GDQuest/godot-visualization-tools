@@ -1,4 +1,12 @@
-class_name DebugUtils
+static func enum_to_string(e: Dictionary, slice := {}) -> String:
+	var partial_result := []
+	var keys := e.keys()
+	if not slice.empty():
+		keys = keys.slice(slice.begin, slice.end, slice.get("step", 1))
+
+	for key in keys:
+		partial_result.push_back(key.capitalize())
+	return ",".join(partial_result)
 
 
 static func array_to_texture(xs: Array) -> ImageTexture:
@@ -98,3 +106,10 @@ static func get_curve_polygon(edge := -1, points := [], transform := Transform2D
 		result.add_point(transform.xform(points[edge]))
 		result.add_point(transform.xform(points[(edge + 1) % points.size()]))
 	return result
+
+
+static func v3normal(v: Vector3) -> Vector3:
+	var result := Vector3(v.z, v.z, -v.x - v.y)
+	if result.is_equal_approx(Vector3.ZERO):
+		result = Vector3(-v.y - v.z, v.x, v.x)
+	return result.normalized()

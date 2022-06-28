@@ -2,19 +2,24 @@ tool
 class_name DebugCollisionShape2D
 extends CollisionShape2D
 
+
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+
 var _theme := DebugCollisionTheme.new(self)
+
+
+func _ready() -> void:
+	if not Engine.editor_hint:
+		add_to_group("GVTCollision")
 
 
 func _draw() -> void:
 	_theme.is_implemented = false
-	if not Engine.editor_hint and not get_tree().debug_collisions_hint:
-		return
-
 	material.shader = _theme.get_shader(shape.get_class())
-	var method_name := ""
 	match _theme.theme:
 		DebugCollisionTheme.ThemeType.SIMPLE, DebugCollisionTheme.ThemeType.DASHED:
-			method_name = "_draw_%s" % shape.get_class().to_lower()
+			var method_name := "" if shape == null else "_draw_%s" % shape.get_class().to_lower()
 			_theme.is_implemented = has_method(method_name)
 			(
 				_theme.is_implemented
@@ -23,7 +28,7 @@ func _draw() -> void:
 			)
 
 		DebugCollisionTheme.ThemeType.HALO:
-			method_name = "_get_rect_%s" % shape.get_class().to_lower()
+			var method_name := "" if shape == null else "_get_rect_%s" % shape.get_class().to_lower()
 			_theme.is_implemented = has_method(method_name)
 			if _theme.is_implemented:
 				# We need to clear the canvas item first to prevent drawing the

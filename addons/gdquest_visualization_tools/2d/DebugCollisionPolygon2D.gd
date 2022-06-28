@@ -2,19 +2,23 @@ tool
 class_name DebugCollisionPolygon2D
 extends CollisionPolygon2D
 
+
+const DebugUtils := preload("../DebugUtils.gd")
+const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
+
 var _theme := DebugCollisionTheme.new(self)
 
 
-func _draw() -> void:
-	_theme.is_implemented = false
-	if not Engine.editor_hint and not get_tree().debug_collisions_hint:
-		return
+func _ready() -> void:
+	if not Engine.editor_hint:
+		add_to_group("GVTCollision")
 
-	_theme.is_implemented = true
+
+func _draw() -> void:
 	material.shader = _theme.get_shader(get_class())
 	match _theme.theme:
 		DebugCollisionTheme.ThemeType.SIMPLE, DebugCollisionTheme.ThemeType.DASHED:
-			if _theme.is_implemented and _theme.theme_width != 0:
+			if _theme.theme_width != 0:
 				_draw_collisionpolygon2d()
 
 		DebugCollisionTheme.ThemeType.HALO:

@@ -1,12 +1,12 @@
 [gd_scene load_steps=20 format=2]
 
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugCollisionShape2D.gd" type="Script" id=1]
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugCollisionPolygon2D.gd" type="Script" id=2]
-[ext_resource path="res://Test.gd" type="Script" id=3]
-[ext_resource path="res://addons/gdquest_visualization_tools/shaders/Shape2D.tres" type="Shader" id=4]
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugRayCast2D.gd" type="Script" id=5]
-[ext_resource path="res://addons/gdquest_visualization_tools/shaders/HaloPolygonShape2D.tres" type="Shader" id=6]
-[ext_resource path="res://addons/gdquest_visualization_tools/DebugPath2D.gd" type="Script" id=7]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugCollisionShape2D.gd" type="Script" id=1]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugCollisionPolygon2D.gd" type="Script" id=2]
+[ext_resource path="res://UI.tscn" type="PackedScene" id=3]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/shaders/Shape2D.tres" type="Shader" id=4]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugRayCast2D.gd" type="Script" id=5]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/shaders/HaloPolygonShape2D.tres" type="Shader" id=6]
+[ext_resource path="res://addons/gdquest_visualization_tools/2d/DebugPath2D.gd" type="Script" id=7]
 
 [sub_resource type="ShaderMaterial" id=77]
 shader = ExtResource( 4 )
@@ -31,7 +31,7 @@ shader = ExtResource( 4 )
 
 [sub_resource type="LineShape2D" id=43]
 
-[sub_resource type="Image" id=84]
+[sub_resource type="Image" id=81]
 data = {
 "data": PoolByteArray( 62, 195, 174, 62, 178, 44, 203, 62, 97, 158, 40, 63, 249, 232, 228, 62, 0, 0, 128, 63, 121, 158, 103, 63, 153, 153, 25, 63, 255, 255, 127, 63, 39, 234, 95, 62, 215, 117, 93, 63 ),
 "format": "RGFloat",
@@ -43,7 +43,7 @@ data = {
 [sub_resource type="ImageTexture" id=82]
 flags = 0
 flags = 0
-image = SubResource( 84 )
+image = SubResource( 81 )
 size = Vector2( 5, 1 )
 
 [sub_resource type="ShaderMaterial" id=83]
@@ -58,18 +58,6 @@ _data = {
 }
 
 [node name="Test" type="Node2D"]
-script = ExtResource( 3 )
-
-[node name="ButtonDebugShapes" type="Button" parent="."]
-margin_right = 88.0
-margin_bottom = 20.0
-text = "Debug Shapes"
-
-[node name="ButtonDebugNavigation" type="Button" parent="."]
-margin_left = 103.0
-margin_right = 227.0
-margin_bottom = 20.0
-text = "Debug Navigation"
 
 [node name="DebugCollisionShape2D" type="CollisionShape2D" parent="."]
 self_modulate = Color( 0.301961, 0.65098, 1, 1 )
@@ -126,9 +114,9 @@ theme_falloff = 0.084
 
 [node name="DebugRayCast2D" type="RayCast2D" parent="."]
 position = Vector2( 464, 320 )
-enabled = true
 cast_to = Vector2( -158, 115 )
 script = ExtResource( 5 )
+palette = 6
 theme = 1
 
 [node name="DebugPath2D" type="Path2D" parent="."]
@@ -136,5 +124,6 @@ self_modulate = Color( 0.301961, 0.65098, 1, 1 )
 position = Vector2( -67, 5 )
 curve = SubResource( 76 )
 script = ExtResource( 7 )
-width = 9
-spread = 106.47
+spread = 68.33
+
+[node name="UI" parent="." instance=ExtResource( 3 )]
