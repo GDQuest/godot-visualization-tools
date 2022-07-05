@@ -33,7 +33,7 @@ func _notification(what: int) -> void:
 				["RayShape", DebugTheme.ThemeType.WIREFRAME]:
 					for rid in _theme.rids.instances:
 						VisualServer.instance_set_transform(rid, xform)
-						xform = transform.translated(shape.length * Vector3.BACK)
+						xform = xform.translated(shape.length * Vector3.BACK)
 				["RayShape", DebugTheme.ThemeType.HALO]:
 					xform.origin = Vector3.ZERO
 					xform = xform.rotated(global_transform.basis.x, PI / 2)
@@ -86,7 +86,7 @@ func _update_capsuleshape() -> Array:
 	mesh.mid_height = shape.height
 	mesh.radial_segments = 32
 	return [{
-		"primitive_types": VisualServer.PRIMITIVE_TRIANGLES,
+		"primitive_type": VisualServer.PRIMITIVE_TRIANGLES,
 		"arrays": mesh.get_mesh_arrays()
 	}]
 

@@ -25,8 +25,9 @@ func _draw() -> void:
 			VisualServer.canvas_item_clear(get_canvas_item())
 			var rect := _get_rect_poligon2d()
 			draw_rect(rect, Color.white)
-			var xform := Transform2D.IDENTITY.scaled(Vector2.ONE / rect.size)
+			var xform := Transform2D(0, -rect.position)
 			xform.origin = -rect.position
+			xform = xform.scaled(Vector2.ONE / rect.size)
 			var normalized_points: Array = xform.xform(polygon)
 			material.set_shader_param("points_size", normalized_points.size())
 			material.set_shader_param("points", DebugUtils.array_to_texture(normalized_points))

@@ -40,8 +40,10 @@ func _draw() -> void:
 					"CapsuleShape2D":
 						material.set_shader_param("ratio", 0.5 * shape.height / shape.radius)
 					"ConvexPolygonShape2D":
-						var xform := Transform2D.IDENTITY.scaled(Vector2.ONE / rect.size)
-						xform.origin = -rect.position
+						var xform := Transform2D(0, -rect.position)
+						xform = xform.scaled(Vector2.ONE / rect.size)
+#						var xform := Transform2D.IDENTITY.scaled(Vector2.ONE / rect.size)
+#						xform.origin = -rect.position
 						var normalized_points: Array = xform.xform(shape.points)
 						material.set_shader_param("points_size", normalized_points.size())
 						material.set_shader_param(
