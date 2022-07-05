@@ -82,7 +82,7 @@ func _draw() -> void:
 				VisualServer.immediate_set_material(_theme.rids.resources[0], _theme.material.get_rid())
 			is_drawn = true
 
-	if is_drawn:
+	if is_drawn and get_world().scenario:
 		_theme.rids.instances.push_back(VisualServer.instance_create2(_theme.rids.resources[0], get_world().scenario))
 		_notification(NOTIFICATION_TRANSFORM_CHANGED)
 
