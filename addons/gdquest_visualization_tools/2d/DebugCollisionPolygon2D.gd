@@ -1,7 +1,6 @@
-tool
+@tool
 class_name DebugCollisionPolygon2D
 extends CollisionPolygon2D
-
 
 const DebugUtils := preload("../DebugUtils.gd")
 const DebugCollisionTheme := preload("DebugCollisionTheme.gd")
@@ -10,7 +9,7 @@ var _theme := DebugCollisionTheme.new(self)
 
 
 func _ready() -> void:
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		add_to_group("GVTCollision")
 
 
@@ -22,16 +21,16 @@ func _draw() -> void:
 				_draw_collisionpolygon2d()
 
 		DebugCollisionTheme.ThemeType.HALO:
-			VisualServer.canvas_item_clear(get_canvas_item())
+			RenderingServer.canvas_item_clear(get_canvas_item())
 			var rect := _get_rect_poligon2d()
-			draw_rect(rect, Color.white)
+			draw_rect(rect, Color.WHITE)
 			var xform := Transform2D(0, -rect.position)
 			xform.origin = -rect.position
 			xform = xform.scaled(Vector2.ONE / rect.size)
-			var normalized_points: Array = xform.xform(polygon)
-			material.set_shader_param("points_size", normalized_points.size())
-			material.set_shader_param("points", DebugUtils.array_to_texture(normalized_points))
-	property_list_changed_notify()
+			var normalized_points: Array = xform * polygon
+			material.set_shader_parameter("points_size", normalized_points.size())
+			material.set_shader_parameter("points", DebugUtils.array_to_texture(normalized_points))
+	notify_property_list_changed()
 
 
 func _draw_collisionpolygon2d() -> void:
@@ -46,17 +45,10 @@ func _draw_collisionpolygon2d() -> void:
 		var full_curve_length := DebugUtils.get_curve_polygon(-1, polygon).get_baked_length()
 		for edge in range(polygon.size()):
 			var curve := DebugUtils.get_curve_polygon(edge, polygon)
-			DebugUtils.draw_polyline_dashed(
-				self,
-				curve,
-				_theme.color,
-				_theme.theme_width,
-				_theme.theme_sample,
-				curve.get_baked_length() / full_curve_length
-			)
+			DebugUtils.draw_polyline_dashed(self, curve, _theme.color, _theme.theme_width, _theme.theme_sample, curve.get_baked_length() / full_curve_length)
 
 
-func _get(property: String):
+func _get(property: StringName) -> Variant:
 	return _theme.get_property(property)
 
 
@@ -71,5 +63,5 @@ func _get_rect_poligon2d() -> Rect2:
 	return result
 
 
-func _set(property: String, value) -> bool:
+func _set(property: StringName, value: Variant) -> bool:
 	return _theme != null and _theme.set_property(property, value)

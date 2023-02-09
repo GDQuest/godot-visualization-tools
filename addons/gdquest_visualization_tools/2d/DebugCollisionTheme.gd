@@ -14,31 +14,12 @@ const THEME_MAP := {
 		"CollisionPolygon2D": preload("shaders/HaloPolygonShape2D.tres"),
 	}
 }
-const THEME_WIDTH_PROPERTY := {
-	"name": "theme_width", "type": TYPE_INT, "hint": PROPERTY_HINT_RANGE, "hint_string": "0,10"
-}
-const THEME_SAMPLE_PROPERTY := {
-	"name": "theme_sample", "type": TYPE_INT, "hint": PROPERTY_HINT_RANGE, "hint_string": "16,64"
-}
-const THEME_FALLOFF_PROPERTY := {
-	"name": "theme_falloff",
-	"type": TYPE_REAL,
-	"hint": PROPERTY_HINT_RANGE,
-	"hint_string": "0.025,1"
-}
+const THEME_WIDTH_PROPERTY := {"name": "theme_width", "type": TYPE_INT, "hint": PROPERTY_HINT_RANGE, "hint_string": "0,10"}
+const THEME_SAMPLE_PROPERTY := {"name": "theme_sample", "type": TYPE_INT, "hint": PROPERTY_HINT_RANGE, "hint_string": "16,64"}
+const THEME_FALLOFF_PROPERTY := {"name": "theme_falloff", "type": TYPE_FLOAT, "hint": PROPERTY_HINT_RANGE, "hint_string": "0.025,1"}
 
-var _palette_property := {
-	"name": "palette",
-	"type": TYPE_INT,
-	"hint": PROPERTY_HINT_ENUM,
-	"hint_string": DebugUtils.enum_to_string(DebugPalette.Type)
-}
-var _theme_property := {
-	"name": "theme",
-	"type": TYPE_INT,
-	"hint": PROPERTY_HINT_ENUM,
-	"hint_string": DebugUtils.enum_to_string(ThemeType)
-}
+var _palette_property := {"name": "palette", "type": TYPE_INT, "hint": PROPERTY_HINT_ENUM, "hint_string": DebugUtils.enum_to_string(DebugPalette.Type)}
+var _theme_property := {"name": "theme", "type": TYPE_INT, "hint": PROPERTY_HINT_ENUM, "hint_string": DebugUtils.enum_to_string(ThemeType)}
 var _node: Node2D = null
 var _previous_palette: int = DebugPalette.Type.INTERACT
 
@@ -51,7 +32,7 @@ var color: Color = DebugPalette.COLORS[palette]
 var is_implemented := false
 
 
-func _init(node: Node2D) -> void:
+func _init(node: Node2D):
 	_node = node
 	_node.material = ShaderMaterial.new()
 	is_implemented = _node is CollisionPolygon2D
@@ -77,16 +58,21 @@ func get_property_list() -> Array:
 
 func get_property(name: String):
 	match name:
-		"palette": return palette
-		"theme": return theme
-		"theme_width": return theme_width
-		"theme_sample": return theme_sample
-		"theme_falloff": return theme_falloff
+		"palette":
+			return palette
+		"theme":
+			return theme
+		"theme_width":
+			return theme_width
+		"theme_sample":
+			return theme_sample
+		"theme_falloff":
+			return theme_falloff
 
 
 func set_property(name: String, value) -> bool:
 	var method_name := "_set_%s" % [name]
-	return has_method(method_name) and funcref(self, method_name).call_func(value)
+	return has_method(method_name) and Callable(self, method_name).call(value)
 
 
 func _set_disabled_effect() -> void:
@@ -94,7 +80,7 @@ func _set_disabled_effect() -> void:
 		_previous_palette = palette
 	color = DebugPalette.COLORS[palette]
 	_node.self_modulate = color
-	_node.update()
+	_node.queue_redraw()
 
 
 func _set_disabled(new_disabled: bool) -> bool:
@@ -112,24 +98,24 @@ func _set_palette(new_palette: int) -> bool:
 
 func _set_theme(new_theme: int) -> bool:
 	theme = new_theme
-	_node.property_list_changed_notify()
-	_node.update()
+	_node.notify_property_list_changed()
+	_node.queue_redraw()
 	return true
 
 
 func _set_theme_width(new_theme_width: int) -> bool:
 	theme_width = new_theme_width
-	_node.update()
+	_node.queue_redraw()
 	return true
 
 
 func _set_theme_sample(new_theme_sample: int) -> bool:
 	theme_sample = new_theme_sample
-	_node.update()
+	_node.queue_redraw()
 	return true
 
 
 func _set_theme_falloff(new_theme_falloff: float) -> bool:
 	theme_falloff = new_theme_falloff
-	_node.material.set_shader_param("falloff", theme_falloff)
+	_node.material.set_shader_parameter("falloff", theme_falloff)
 	return true

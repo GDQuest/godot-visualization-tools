@@ -1,46 +1,46 @@
-[gd_resource type="Theme" load_steps=9 format=2]
+[gd_resource type="Theme" load_steps=9 format=3 uid="uid://c002v7yj71ujo"]
 
-[ext_resource path="res://assets/theme/fonts/TitleFont.tres" type="DynamicFont" id=1]
-[ext_resource path="res://assets/theme/fonts/Montserrat-Bold.ttf" type="DynamicFontData" id=2]
-[ext_resource path="res://assets/theme/button.png" type="Texture" id=3]
-[ext_resource path="res://assets/theme/buttonPressed.png" type="Texture" id=4]
+[ext_resource type="FontFile" path="res://assets/theme/fonts/TitleFont.tres" id="1"]
+[ext_resource type="FontFile" uid="uid://6tnx62q06wr" path="res://assets/theme/fonts/Montserrat-Bold.ttf" id="2"]
+[ext_resource type="Texture2D" uid="uid://dotknygf0bc8d" path="res://assets/theme/button.png" id="3"]
+[ext_resource type="Texture2D" uid="uid://bngd0tbfbh8be" path="res://assets/theme/buttonPressed.png" id="4"]
 
-[sub_resource type="DynamicFont" id=1]
-size = 28
-font_data = ExtResource( 2 )
+[sub_resource type="FontFile" id="1"]
+fallbacks = Array[Font]([ExtResource("2")])
+face_index = null
+embolden = null
+transform = null
+cache/0/16/0/ascent = 0.0
+cache/0/16/0/descent = 0.0
+cache/0/16/0/underline_position = 0.0
+cache/0/16/0/underline_thickness = 0.0
+cache/0/16/0/scale = 1.0
+cache/0/16/0/kerning_overrides/16/0 = Vector2(0, 0)
 
-[sub_resource type="StyleBoxTexture" id=2]
-texture = ExtResource( 4 )
-region_rect = Rect2( 0, 0, 199, 128 )
-margin_left = 23.1579
-margin_right = 23.0
-margin_top = 35.1975
-margin_bottom = 35.1975
-modulate_color = Color( 0.552941, 0.588235, 0.760784, 1 )
+[sub_resource type="StyleBoxTexture" id="2"]
+texture = ExtResource("4")
+region_rect = Rect2(0, 0, 199, 128)
+modulate_color = Color(0.552941, 0.588235, 0.760784, 1)
 
-[sub_resource type="StyleBoxEmpty" id=3]
+[sub_resource type="StyleBoxEmpty" id="3"]
 
-[sub_resource type="StyleBoxTexture" id=4]
-texture = ExtResource( 3 )
-region_rect = Rect2( 0, 0, 199, 128 )
-margin_left = 23.0
-margin_right = 23.0
-margin_top = 23.0
-margin_bottom = 46.0
+[sub_resource type="StyleBoxTexture" id="4"]
+texture = ExtResource("3")
+region_rect = Rect2(0, 0, 199, 128)
 
 [resource]
-default_font = ExtResource( 1 )
-Button/colors/font_color = Color( 0.760784, 0.760784, 0.819608, 1 )
-Button/colors/font_color_disabled = Color( 0.196078, 0.160784, 0.278431, 0.619608 )
-Button/colors/font_color_focus = Color( 0.760784, 0.760784, 0.819608, 1 )
-Button/colors/font_color_hover = Color( 0.760784, 0.760784, 0.819608, 1 )
-Button/colors/font_color_pressed = Color( 0.494118, 0.494118, 0.560784, 1 )
+default_font = ExtResource("1")
+Button/colors/font_color = Color(0.760784, 0.760784, 0.819608, 1)
+Button/colors/font_color_disabled = Color(0.196078, 0.160784, 0.278431, 0.619608)
+Button/colors/font_color_focus = Color(0.760784, 0.760784, 0.819608, 1)
+Button/colors/font_color_hover = Color(0.760784, 0.760784, 0.819608, 1)
+Button/colors/font_color_pressed = Color(0.494118, 0.494118, 0.560784, 1)
 Button/constants/hseparation = 2
-Button/fonts/font = SubResource( 1 )
-Button/styles/disabled = SubResource( 2 )
-Button/styles/focus = SubResource( 3 )
-Button/styles/hover = SubResource( 4 )
-Button/styles/normal = SubResource( 4 )
-Button/styles/pressed = SubResource( 2 )
+Button/fonts/font = SubResource("1")
+Button/styles/disabled = SubResource("2")
+Button/styles/focus = SubResource("3")
+Button/styles/hover = SubResource("4")
+Button/styles/normal = SubResource("4")
+Button/styles/pressed = SubResource("2")
 HBoxContainer/constants/separation = 16
 VBoxContainer/constants/separation = 16

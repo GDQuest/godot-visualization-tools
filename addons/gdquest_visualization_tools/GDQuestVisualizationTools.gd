@@ -1,8 +1,7 @@
 extends Node
 
-
-var is_debug_collision_visible := true setget set_is_debug_collision_visible
-var is_debug_navigation_visible := true setget set_is_debug_navigation_visible
+var is_debug_collision_visible := true : set = set_is_debug_collision_visible
+var is_debug_navigation_visible := true : set = set_is_debug_navigation_visible
 
 
 func _ready() -> void:

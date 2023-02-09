@@ -1,10 +1,11 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://buh10rgvllj32"]
 
 [resource]
 code = "shader_type spatial;
 render_mode depth_draw_opaque, cull_disabled, ambient_light_disabled, blend_add, shadows_disabled;
 
-uniform vec4 color: hint_color = vec4(1.0);
+uniform sampler2D DEPTH_TEXTURE: hint_depth_texture, filter_linear_mipmap;
+uniform vec4 color: source_color = vec4(1.0);
 uniform float fresnel_power = 1.0;
 uniform float edge_intensity = 0.5;
 
