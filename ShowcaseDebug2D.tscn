@@ -1,4 +1,4 @@
-[gd_scene load_steps=49 format=3 uid="uid://5858ehs7136k"]
+[gd_scene load_steps=42 format=3 uid="uid://5858ehs7136k"]
 
 [ext_resource type="Shader" uid="uid://cgf5nd61g4bmn" path="res://addons/gdquest_visualization_tools/2d/shaders/Shape2D.tres" id="1"]
 [ext_resource type="Script" path="res://addons/gdquest_visualization_tools/2d/DebugCollisionPolygon2D.gd" id="2"]
@@ -8,102 +8,81 @@
 [ext_resource type="Script" path="res://addons/gdquest_visualization_tools/2d/DebugRayCast2D.gd" id="7"]
 [ext_resource type="Script" path="res://addons/gdquest_visualization_tools/2d/DebugCollisionShape2D.gd" id="8"]
 [ext_resource type="Shader" uid="uid://ckha4qr0olxpf" path="res://addons/gdquest_visualization_tools/2d/shaders/HaloPolygonShape2D.tres" id="9"]
-[ext_resource type="Shader" path="res://addons/gdquest_visualization_tools/2d/shaders/HaloCircleShape2D.tres" id="10"]
-[ext_resource type="Shader" path="res://addons/gdquest_visualization_tools/2d/shaders/HaloCapsuleShape2D.tres" id="11"]
-[ext_resource type="Shader" path="res://addons/gdquest_visualization_tools/2d/shaders/HaloRectangleShape2D.tres" id="12"]
 [ext_resource type="Theme" uid="uid://c002v7yj71ujo" path="res://assets/theme/ui_theme.tres" id="13"]
 
-[sub_resource type="ShaderMaterial" id="83"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_owdww"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="84"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6lemr"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="Image" id="Image_msaeb"]
-data = {
-"data": PackedByteArray(142, 116, 216, 61, 0, 0, 0, 0, 0, 0, 0, 0, 80, 94, 67, 63, 44, 81, 187, 62, 0, 0, 128, 63, 255, 255, 127, 63, 94, 67, 57, 63, 74, 212, 46, 63, 174, 161, 60, 62),
-"format": "RGFloat",
-"height": 1,
-"mipmaps": false,
-"width": 5
-}
-
-[sub_resource type="ImageTexture" id="86"]
-image = SubResource("Image_msaeb")
-
-[sub_resource type="ShaderMaterial" id="87"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v81yi"]
 shader = ExtResource("9")
 shader_parameter/falloff = 0.25
-shader_parameter/points_size = 5
-shader_parameter/points = SubResource("86")
+shader_parameter/points_size = null
 
-[sub_resource type="ShaderMaterial" id="88"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_edfr4"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
 [sub_resource type="CapsuleShape2D" id="21"]
 radius = 25.0
 height = 50.0
 
-[sub_resource type="ShaderMaterial" id="89"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7m06s"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
 [sub_resource type="CircleShape2D" id="23"]
 radius = 40.0
 
-[sub_resource type="ShaderMaterial" id="90"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pfhee"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
 [sub_resource type="RectangleShape2D" id="25"]
 size = Vector2(70, 50)
 
-[sub_resource type="ShaderMaterial" id="91"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_55pj0"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
 [sub_resource type="ConvexPolygonShape2D" id="24"]
 points = PackedVector2Array(-40, -20, 30, -25, 5, 45)
 
-[sub_resource type="ShaderMaterial" id="92"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_runnb"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="93"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_s2acl"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="94"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_y5gmt"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="95"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_loukk"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="96"]
-shader = ExtResource("11")
-shader_parameter/falloff = 0.5
-shader_parameter/ratio = 0.833333
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fbbsl"]
+shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="97"]
-shader = ExtResource("10")
-shader_parameter/falloff = 0.5
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_icnac"]
+shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="98"]
-shader = ExtResource("12")
-shader_parameter/falloff = 0.5
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p4b3c"]
+shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="Image" id="Image_d3c5j"]
-data = {
-"data": PackedByteArray(0, 0, 0, 0, 36, 73, 146, 61, 0, 0, 128, 63, 0, 0, 0, 0, 74, 146, 36, 63, 0, 0, 128, 63),
-"format": "RGFloat",
-"height": 1,
-"mipmaps": false,
-"width": 3
-}
-
-[sub_resource type="ImageTexture" id="100"]
-image = SubResource("Image_d3c5j")
-
-[sub_resource type="ShaderMaterial" id="101"]
-shader = ExtResource("9")
-shader_parameter/falloff = 0.25
-shader_parameter/points_size = 3
-shader_parameter/points = SubResource("100")
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r6hwj"]
+shader = ExtResource("1")
+shader_parameter/color = null
 
 [sub_resource type="WorldBoundaryShape2D" id="56"]
 normal = Vector2(0.2356, -0.97185)
@@ -113,7 +92,7 @@ length = 0.001
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DebugRayCast2DSimple:cast_to")
+tracks/0/path = NodePath("DebugRayCast2DSimple:target_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -125,7 +104,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("DebugRayCast2D2Dashed:cast_to")
+tracks/1/path = NodePath("DebugRayCast2D2Dashed:target_position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -162,10 +141,11 @@ tracks/3/keys = {
 [sub_resource type="Animation" id="60"]
 resource_name = "SwingRayCast"
 length = 2.0
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
-tracks/0/path = NodePath("DebugRayCast2DSimple:cast_to")
+tracks/0/path = NodePath("DebugRayCast2DSimple:target_position")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
@@ -177,7 +157,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("DebugRayCast2D2Dashed:cast_to")
+tracks/1/path = NodePath("DebugRayCast2D2Dashed:target_position")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -223,29 +203,36 @@ _data = {
 }
 point_count = 6
 
-[sub_resource type="ShaderMaterial" id="102"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vltj8"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
 [sub_resource type="RectangleShape2D" id="82"]
 size = Vector2(220, 60)
 
-[sub_resource type="ShaderMaterial" id="103"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcbly"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="104"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_akrxh"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="105"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8dvso"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="106"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3svg"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="107"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jnnyh"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
-[sub_resource type="ShaderMaterial" id="108"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_uf4ud"]
 shader = ExtResource("1")
+shader_parameter/color = null
 
 [node name="ShowcaseDebug2D" type="Node2D"]
 
@@ -260,7 +247,7 @@ position = Vector2(0, -1)
 
 [node name="DebugCollisionPolygon2DSimple" type="CollisionPolygon2D" parent="DebugObjects/DebugCollisionPolygon2D"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("83")
+material = SubResource("ShaderMaterial_owdww")
 position = Vector2(695.9, 143.8)
 polygon = PackedVector2Array(-26, -37, -39, 21, 6, 39, 84, 18, 45, -23)
 script = ExtResource("2")
@@ -271,18 +258,17 @@ theme_sample = 24
 
 [node name="DebugCollisionPolygon2DDashed" type="CollisionPolygon2D" parent="DebugObjects/DebugCollisionPolygon2D"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("84")
+material = SubResource("ShaderMaterial_6lemr")
 position = Vector2(1166, 149.6)
 polygon = PackedVector2Array(-26, -37, -39, 21, 6, 39, 84, 18, 45, -23)
 script = ExtResource("2")
-palette = 0
+palette = 1
 theme = 1
 theme_width = 4
 theme_sample = 24
 
 [node name="DebugCollisionPolygon2DHalo" type="CollisionPolygon2D" parent="DebugObjects/DebugCollisionPolygon2D"]
-self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("87")
+material = SubResource("ShaderMaterial_v81yi")
 position = Vector2(1669, 149.6)
 polygon = PackedVector2Array(-26, -37, -39, 21, 6, 39, 84, 18, 45, -23)
 script = ExtResource("2")
@@ -296,145 +282,115 @@ theme_falloff = 0.25
 
 [node name="DebugCollisionShape2DCapsule" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DSimple"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("88")
+material = SubResource("ShaderMaterial_edfr4")
 position = Vector2(692, 306)
 shape = SubResource("21")
 script = ExtResource("8")
-palette = 0
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DCircle" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DSimple"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("89")
+material = SubResource("ShaderMaterial_7m06s")
 position = Vector2(771, 306)
 shape = SubResource("23")
 script = ExtResource("8")
-palette = 0
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DSimple"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("90")
+material = SubResource("ShaderMaterial_pfhee")
 position = Vector2(715, 411)
 shape = SubResource("25")
 script = ExtResource("8")
-palette = 0
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DConvexPolygon" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DSimple"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("91")
+material = SubResource("ShaderMaterial_55pj0")
 position = Vector2(794, 387)
 shape = SubResource("24")
 script = ExtResource("8")
-palette = 0
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DDashed" type="Node2D" parent="DebugObjects/DebugCollisionShape2D"]
 
 [node name="DebugCollisionShape2DCapsule" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DDashed"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("92")
+material = SubResource("ShaderMaterial_runnb")
 position = Vector2(1160, 306)
 shape = SubResource("21")
 script = ExtResource("8")
-palette = 0
-theme = 1
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DCircle" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DDashed"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("93")
+material = SubResource("ShaderMaterial_s2acl")
 position = Vector2(1239, 306)
 shape = SubResource("23")
 script = ExtResource("8")
-palette = 0
-theme = 1
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DDashed"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("94")
+material = SubResource("ShaderMaterial_y5gmt")
 position = Vector2(1183, 411)
 shape = SubResource("25")
 script = ExtResource("8")
-palette = 0
-theme = 1
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DConvexPolygon" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DDashed"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("95")
+material = SubResource("ShaderMaterial_loukk")
 position = Vector2(1264, 387)
 shape = SubResource("24")
 script = ExtResource("8")
-palette = 0
-theme = 1
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DHalo" type="Node2D" parent="DebugObjects/DebugCollisionShape2D"]
 
 [node name="DebugCollisionShape2DCapsule" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DHalo"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("96")
+material = SubResource("ShaderMaterial_fbbsl")
 position = Vector2(1650, 306)
 shape = SubResource("21")
 script = ExtResource("8")
-palette = 0
-theme = 2
-theme_falloff = 0.5
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DCircle" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DHalo"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("97")
+material = SubResource("ShaderMaterial_icnac")
 position = Vector2(1729, 306)
 shape = SubResource("23")
 script = ExtResource("8")
-palette = 0
-theme = 2
-theme_falloff = 0.5
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DHalo"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("98")
+material = SubResource("ShaderMaterial_p4b3c")
 position = Vector2(1673, 411)
 shape = SubResource("25")
 script = ExtResource("8")
-palette = 0
-theme = 2
-theme_falloff = 0.5
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DConvexPolygon" type="CollisionShape2D" parent="DebugObjects/DebugCollisionShape2D/DebugCollisionShape2DHalo"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("101")
+material = SubResource("ShaderMaterial_r6hwj")
 position = Vector2(1754, 387)
 shape = SubResource("24")
 script = ExtResource("8")
-palette = 0
-theme = 2
-theme_falloff = 0.25
+script = ExtResource("8")
 
 [node name="DebugRayCast2D" type="Node2D" parent="DebugObjects"]
 
 [node name="DebugRayCast2DSimple" type="RayCast2D" parent="DebugObjects/DebugRayCast2D"]
 position = Vector2(813, 490)
+target_position = Vector2(-90, 110)
 script = ExtResource("7")
 cast_to = Vector2(-90, 110)
 
 [node name="DebugRayCast2D2Dashed" type="RayCast2D" parent="DebugObjects/DebugRayCast2D"]
 position = Vector2(1287, 490)
+target_position = Vector2(-90, 110)
 script = ExtResource("7")
 theme = 1
 cast_to = Vector2(-90, 110)
@@ -469,81 +425,60 @@ position = Vector2(0, -1)
 
 [node name="DebugCollisionShape2DRectangle" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(0.301961, 0.65098, 1, 1)
-material = SubResource("102")
+material = SubResource("ShaderMaterial_vltj8")
 position = Vector2(363, 909)
 shape = SubResource("82")
 script = ExtResource("8")
-palette = 0
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle2" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(1, 0.894118, 0.470588, 1)
-material = SubResource("103")
+material = SubResource("ShaderMaterial_pcbly")
 position = Vector2(606, 909)
 shape = SubResource("82")
 script = ExtResource("8")
-palette = 1
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle3" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(0.560784, 0.870588, 0.364706, 1)
-material = SubResource("104")
+material = SubResource("ShaderMaterial_akrxh")
 position = Vector2(846, 909)
 shape = SubResource("82")
 script = ExtResource("8")
-palette = 2
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle4" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(0.690196, 0.188235, 0.360784, 1)
-material = SubResource("105")
+material = SubResource("ShaderMaterial_8dvso")
 position = Vector2(1084, 909)
 shape = SubResource("82")
 script = ExtResource("8")
-palette = 3
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle5" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(0.690196, 0.188235, 0.360784, 1)
-material = SubResource("106")
+material = SubResource("ShaderMaterial_i3svg")
 position = Vector2(1327, 909)
 shape = SubResource("82")
 script = ExtResource("8")
-palette = 4
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle6" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(0.690196, 0.188235, 0.360784, 1)
-material = SubResource("107")
+material = SubResource("ShaderMaterial_jnnyh")
 position = Vector2(1569, 909)
 shape = SubResource("82")
 script = ExtResource("8")
-palette = 5
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="DebugCollisionShape2DRectangle7" type="CollisionShape2D" parent="Palette"]
 self_modulate = Color(0.376471, 0.376471, 0.439216, 1)
-material = SubResource("108")
+material = SubResource("ShaderMaterial_uf4ud")
 position = Vector2(1805, 909)
 shape = SubResource("82")
 disabled = true
 script = ExtResource("8")
-palette = 6
-theme = 0
-theme_width = 4
-theme_sample = 24
+script = ExtResource("8")
 
 [node name="UI" parent="." instance=ExtResource("4")]
 offset_top = 975.0
@@ -554,6 +489,8 @@ layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 mouse_filter = 2
 theme = ExtResource("13")
 

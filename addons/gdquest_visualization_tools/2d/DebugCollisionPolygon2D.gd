@@ -38,8 +38,8 @@ func _draw_collisionpolygon2d() -> void:
 		return
 
 	if _theme.theme == DebugCollisionTheme.ThemeType.SIMPLE:
-		var points: Array = polygon
-		points.append_array(points.slice(0, 0))
+		var points := Array(polygon)
+		points.append_array(points.slice(0, 1))
 		draw_polyline(points, _theme.color, _theme.theme_width)
 	else:
 		var full_curve_length := DebugUtils.get_curve_polygon(-1, polygon).get_baked_length()
@@ -53,7 +53,7 @@ func _get(property: StringName) -> Variant:
 
 
 func _get_property_list() -> Array:
-	return _theme.get_property_list()
+	return _theme.gen_property_list()
 
 
 func _get_rect_poligon2d() -> Rect2:

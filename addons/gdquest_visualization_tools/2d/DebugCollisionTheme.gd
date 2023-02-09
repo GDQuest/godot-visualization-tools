@@ -42,7 +42,7 @@ func get_shader(key) -> Shader:
 	return THEME_MAP.get(theme, {}).get(key, SHAPE_2D_SHADER)
 
 
-func get_property_list() -> Array:
+func gen_property_list() -> Array:
 	var result := []
 	match [is_implemented, theme, theme_width]:
 		[false, _, _]:
@@ -56,7 +56,7 @@ func get_property_list() -> Array:
 	return result
 
 
-func get_property(name: String):
+func get_property(name: StringName):
 	match name:
 		"palette":
 			return palette
@@ -70,7 +70,7 @@ func get_property(name: String):
 			return theme_falloff
 
 
-func set_property(name: String, value) -> bool:
+func set_property(name: StringName, value: Variant) -> bool:
 	var method_name := "_set_%s" % [name]
 	return has_method(method_name) and Callable(self, method_name).call(value)
 
@@ -79,8 +79,8 @@ func _set_disabled_effect() -> void:
 	if palette != DebugPalette.Type.DISABLED:
 		_previous_palette = palette
 	color = DebugPalette.COLORS[palette]
-	_node.self_modulate = color
-	_node.queue_redraw()
+	_node.material.set_shader_parameter("color", color)
+#	_node.queue_redraw()
 
 
 func _set_disabled(new_disabled: bool) -> bool:

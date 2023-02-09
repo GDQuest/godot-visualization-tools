@@ -24,9 +24,8 @@ static func array_to_texture(xs: Array) -> ImageTexture:
 			stream.put_float(x.y)
 			if x is Vector3:
 				stream.put_float(x.z)
-	var image := Image.new()
-	image.create_from_data(xs.size(), 1, false, format, stream.data_array)
-	result.create_from_image(image) #,0
+	var image := Image.create_from_data(xs.size(), 1, false, Image.FORMAT_RGF, stream.data_array)
+	result = ImageTexture.create_from_image(image)
 
 	return result
 
