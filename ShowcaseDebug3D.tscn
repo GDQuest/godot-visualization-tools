@@ -1,164 +1,162 @@
-[gd_scene load_steps=19 format=2]
+[gd_scene load_steps=19 format=3 uid="uid://b7min5reo3ojx"]
 
-[ext_resource path="res://UI.tscn" type="PackedScene" id=1]
-[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionPolygon.gd" type="Script" id=2]
-[ext_resource path="res://assets/theme/fonts/ExtraLargeFont.tres" type="FontFile" id=3]
-[ext_resource path="res://assets/theme/fonts/TitleFont.tres" type="FontFile" id=4]
-[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugCollisionShape.gd" type="Script" id=5]
-[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugRayCast.gd" type="Script" id=6]
-[ext_resource path="res://addons/gdquest_visualization_tools/3d/DebugPath.gd" type="Script" id=7]
+[ext_resource type="PackedScene" uid="uid://dxet4scsreo6l" path="res://UI.tscn" id="1"]
+[ext_resource type="Script" path="res://addons/gdquest_visualization_tools/3d/DebugCollisionPolygon3D.gd" id="2"]
+[ext_resource type="Script" path="res://addons/gdquest_visualization_tools/3d/DebugCollisionShape3D.gd" id="5"]
+[ext_resource type="Script" path="res://addons/gdquest_visualization_tools/3d/DebugRayCast3D.gd" id="6"]
+[ext_resource type="Script" path="res://addons/gdquest_visualization_tools/3d/DebugPath3D.gd" id="7"]
+[ext_resource type="FontFile" uid="uid://6tnx62q06wr" path="res://assets/theme/fonts/Montserrat-Bold.ttf" id="7_m0r8u"]
 
-[sub_resource type="Sky" id=1]
-sky_top_color = Color( 0.188235, 0.317647, 0.388235, 1 )
-sky_horizon_color = Color( 0.580392, 0.454902, 0.294118, 1 )
-sky_curve = 0.11471
-sun_color = Color( 0.937255, 0.709804, 0.466667, 1 )
-sun_latitude = 5.0
-sun_longitude = -51.0
-sun_angle_max = 35.0
+[sub_resource type="Sky" id="1"]
 
-[sub_resource type="Environment" id=2]
+[sub_resource type="Environment" id="2"]
 background_mode = 2
-background_sky = SubResource( 1 )
+sky = SubResource("1")
 tonemap_mode = 3
 adjustment_brightness = 0.88
 
-[sub_resource type="BoxShape3D" id=3]
-extents = Vector3( 0.5, 0.3, 0.4 )
+[sub_resource type="BoxShape3D" id="3"]
+size = Vector3(1, 0.6, 0.8)
 
-[sub_resource type="CapsuleShape3D" id=4]
-radius = 0.6
+[sub_resource type="CapsuleShape3D" id="4"]
+radius = 0.2
 height = 0.4
 
-[sub_resource type="CylinderShape3D" id=5]
+[sub_resource type="CylinderShape3D" id="5"]
 height = 0.8
 radius = 0.6
 
-[sub_resource type="SeparationRayShape3D" id=6]
+[sub_resource type="SeparationRayShape3D" id="6"]
 
-[sub_resource type="SphereShape3D" id=7]
-radius = 0.5
+[sub_resource type="SphereShape3D" id="7"]
 
-[sub_resource type="SphereShape3D" id=9]
+[sub_resource type="SphereShape3D" id="9"]
 radius = 0.6
 
-[sub_resource type="Animation" id=10]
+[sub_resource type="Animation" id="10"]
 length = 0.001
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("DebugRayCastWireframe:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector3( 0, 0, -45 ) ]
+"values": [Vector3(0, 0, -45)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("DebugRayCastHalo:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ Vector3( 0, 0, -45 ) ]
+"values": [Vector3(0, 0, -45)]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("DebugRayCastWireframe:enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ true ]
+"values": [true]
 }
 tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("DebugRayCastHalo:enabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"times": PackedFloat32Array( 0 ),
-"transitions": PackedFloat32Array( 1 ),
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [ true ]
+"values": [true]
 }
 
-[sub_resource type="Animation" id=8]
+[sub_resource type="Animation" id="8"]
 resource_name = "SwingRayCast"
 length = 2.0
-loop = true
+loop_mode = 1
 tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
 tracks/0/path = NodePath("DebugRayCastWireframe:rotation_degrees")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
-tracks/0/imported = false
-tracks/0/enabled = true
 tracks/0/keys = {
-"times": PackedFloat32Array( 0, 0.5, 1, 1.5 ),
-"transitions": PackedFloat32Array( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -80 ), Vector3( 0, 0, -45 ), Vector3( 0, 0, -80 ) ]
+"values": [Vector3(0, 0, -45), Vector3(0, 0, -80), Vector3(0, 0, -45), Vector3(0, 0, -80)]
 }
 tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
 tracks/1/path = NodePath("DebugRayCastHalo:rotation_degrees")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
-tracks/1/imported = false
-tracks/1/enabled = true
 tracks/1/keys = {
-"times": PackedFloat32Array( 0, 0.5, 1, 1.5 ),
-"transitions": PackedFloat32Array( 1, 1, 1, 1 ),
+"times": PackedFloat32Array(0, 0.5, 1, 1.5),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 0,
-"values": [ Vector3( 0, 0, -45 ), Vector3( 0, 0, -80 ), Vector3( 0, 0, -45 ), Vector3( 0, 0, -80 ) ]
+"values": [Vector3(0, 0, -45), Vector3(0, 0, -80), Vector3(0, 0, -45), Vector3(0, 0, -80)]
 }
 tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
 tracks/2/path = NodePath("DebugRayCastWireframe:enabled")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
-tracks/2/imported = false
-tracks/2/enabled = true
 tracks/2/keys = {
-"times": PackedFloat32Array( 0, 1 ),
-"transitions": PackedFloat32Array( 1, 1 ),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ true, false ]
+"values": [true, false]
 }
 tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
 tracks/3/path = NodePath("DebugRayCastHalo:enabled")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
-tracks/3/imported = false
-tracks/3/enabled = true
 tracks/3/keys = {
-"times": PackedFloat32Array( 0, 1 ),
-"transitions": PackedFloat32Array( 1, 1 ),
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
 "update": 1,
-"values": [ true, false ]
+"values": [true, false]
 }
 
-[sub_resource type="Curve3D" id=11]
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_y88im"]
 _data = {
-"points": PackedVector3Array( 0, 0, 0, 0, 0, 0, -0.707929, -0.404494, -0.0672011, 0, 0, 0, 0, 0, 0, 0.0275743, 0.314582, -1.07945, 0.0884607, 0.34654, -0.813774, -0.0884607, -0.34654, 0.813774, 1.18008, 0, 0.013823, 0, 0, 0, 0, 0, 0, -0.726468, 1.16257, 0.478541 ),
-"tilts": PackedFloat32Array( 0, 0, 0, 0 )
+"RESET": SubResource("10"),
+"SwingRayCast": SubResource("8")
 }
+
+[sub_resource type="Curve3D" id="11"]
+_data = {
+"points": PackedVector3Array(0, 0, 0, 0, 0, 0, -0.707929, -0.404494, -0.0672011, 0, 0, 0, 0, 0, 0, 0.0275743, 0.314582, -1.07945, 0.0884607, 0.34654, -0.813774, -0.0884607, -0.34654, 0.813774, 1.18008, 0, 0.013823, 0, 0, 0, 0, 0, 0, -0.726468, 1.16257, 0.478541),
+"tilts": PackedFloat32Array(0, 0, 0, 0)
+}
+point_count = 4
 
 [node name="ShowcaseDebug3D" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
-environment = SubResource( 2 )
+environment = SubResource("2")
 
 [node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 8 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.5, 8)
 current = true
 
 [node name="DebugObjects" type="Node3D" parent="."]
@@ -166,16 +164,16 @@ current = true
 [node name="DebugCollisionPolygon" type="Node3D" parent="DebugObjects"]
 
 [node name="DebugCollisionPolygonWireframe" type="CollisionPolygon3D" parent="DebugObjects/DebugCollisionPolygon"]
-transform = Transform3D( 0.819152, 0, -0.573577, 0, 1, 0, 0.573577, 0, 0.819152, -1, 6.5, 0 )
-polygon = PackedVector2Array( 0.487499, 0.733912, 0.540985, -0.0879681, -0.423798, -0.167659, -0.162893, 0.302618 )
-script = ExtResource( 2 )
+transform = Transform3D(0.819152, 0, -0.573577, 0, 1, 0, 0.573577, 0, 0.819152, -1, 6.5, 0)
+polygon = PackedVector2Array(0.487499, 0.733912, 0.540985, -0.0879681, -0.423798, -0.167659, -0.162893, 0.302618)
+script = ExtResource("2")
 palette = 0
 theme = 0
 
 [node name="DebugCollisionPolygonHalo" type="CollisionPolygon3D" parent="DebugObjects/DebugCollisionPolygon"]
-transform = Transform3D( 0.819152, 0, -0.573577, 0, 1, 0, 0.573577, 0, 0.819152, 4, 6.5, 0 )
-polygon = PackedVector2Array( 0.487499, 0.733912, 0.540985, -0.0879681, -0.423798, -0.167659, -0.162893, 0.302618 )
-script = ExtResource( 2 )
+transform = Transform3D(0.819152, 0, -0.573577, 0, 1, 0, 0.573577, 0, 0.819152, 4, 6.5, 0)
+polygon = PackedVector2Array(0.487499, 0.733912, 0.540985, -0.0879681, -0.423798, -0.167659, -0.162893, 0.302618)
+script = ExtResource("2")
 palette = 0
 theme = 1
 theme_fresnel_power = 1.0
@@ -184,86 +182,86 @@ theme_edge_intensity = 0.5
 [node name="DebugCollisionShape" type="Node3D" parent="DebugObjects"]
 
 [node name="DebugCollisionShapeWireframe" type="Node3D" parent="DebugObjects/DebugCollisionShape"]
-transform = Transform3D( 0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -0.25, 0, 0 )
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, -0.25, 0, 0)
 
 [node name="DebugCollisionShape" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeWireframe"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 0 )
-shape = SubResource( 3 )
-script = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 0)
+shape = SubResource("3")
+script = ExtResource("5")
 palette = 0
 theme = 0
 
 [node name="DebugCollisionShape2" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeWireframe"]
-transform = Transform3D( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 5.5, 0 )
-shape = SubResource( 4 )
-script = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 5.5, 0)
+shape = SubResource("4")
+script = ExtResource("5")
 palette = 0
 theme = 0
 
 [node name="DebugCollisionShape3" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeWireframe"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4, 0 )
-shape = SubResource( 5 )
-script = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4, 0)
+shape = SubResource("5")
+script = ExtResource("5")
 palette = 0
 theme = 0
 
 [node name="DebugCollisionShape4" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeWireframe"]
-transform = Transform3D( 0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, -0.5, 4.25, 0 )
-shape = SubResource( 6 )
-script = ExtResource( 5 )
+transform = Transform3D(0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, -0.5, 4.25, 0)
+shape = SubResource("6")
+script = ExtResource("5")
 palette = 0
 theme = 0
 
 [node name="DebugCollisionShape5" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeWireframe"]
-transform = Transform3D( 0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, 0.5, 4, 0 )
-shape = SubResource( 7 )
-script = ExtResource( 5 )
+transform = Transform3D(0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, 0.5, 4, 0)
+shape = SubResource("7")
+script = ExtResource("5")
 palette = 0
 theme = 0
 
 [node name="DebugCollisionShapeHalo" type="Node3D" parent="DebugObjects/DebugCollisionShape"]
-transform = Transform3D( 0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, 5, 0, 0 )
+transform = Transform3D(0.819152, 0, -0.573576, 0, 1, 0, 0.573576, 0, 0.819152, 5, 0, 0)
 
 [node name="DebugCollisionShape" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeHalo"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 0 )
-shape = SubResource( 3 )
-script = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 5.5, 0)
+shape = SubResource("3")
+script = ExtResource("5")
 palette = 0
 theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
 
 [node name="DebugCollisionShape2" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeHalo"]
-transform = Transform3D( 1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 5.5, 0 )
-shape = SubResource( 4 )
-script = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 0.819152, 0.573577, 0, -0.573577, 0.819152, 0, 5.5, 0)
+shape = SubResource("4")
+script = ExtResource("5")
 palette = 0
 theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
 
 [node name="DebugCollisionShape3" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeHalo"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4, 0 )
-shape = SubResource( 5 )
-script = ExtResource( 5 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1.5, 4, 0)
+shape = SubResource("5")
+script = ExtResource("5")
 palette = 0
 theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
 
 [node name="DebugCollisionShape4" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeHalo"]
-transform = Transform3D( 0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, -0.5, 4.25, 0 )
-shape = SubResource( 6 )
-script = ExtResource( 5 )
+transform = Transform3D(0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, -0.5, 4.25, 0)
+shape = SubResource("6")
+script = ExtResource("5")
 palette = 0
 theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
 
 [node name="DebugCollisionShape5" type="CollisionShape3D" parent="DebugObjects/DebugCollisionShape/DebugCollisionShapeHalo"]
-transform = Transform3D( 0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, 0.5, 4, 0 )
-shape = SubResource( 7 )
-script = ExtResource( 5 )
+transform = Transform3D(0.819152, 0.496732, 0.286788, 0, 0.5, -0.866025, -0.573577, 0.709406, 0.409576, 0.5, 4, 0)
+shape = SubResource("7")
+script = ExtResource("5")
 palette = 0
 theme = 1
 theme_fresnel_power = 1.0
@@ -272,50 +270,49 @@ theme_edge_intensity = 0.5
 [node name="DebugRayCast" type="Node3D" parent="DebugObjects"]
 
 [node name="DebugRayCastWireframe" type="RayCast3D" parent="DebugObjects/DebugRayCast"]
-transform = Transform3D( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 3, 0 )
-enabled = true
-cast_to = Vector3( 0, -1.5, 0 )
-script = ExtResource( 6 )
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 0, 3, 0)
+script = ExtResource("6")
 palette = 0
 theme = 0
 
 [node name="DebugRayCastHalo" type="RayCast3D" parent="DebugObjects/DebugRayCast"]
-transform = Transform3D( 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 5, 3, 0 )
-enabled = true
-cast_to = Vector3( 0, -1.5, 0 )
-script = ExtResource( 6 )
+transform = Transform3D(0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 0, 0, 1, 5, 3, 0)
+script = ExtResource("6")
 palette = 0
 theme = 1
-theme_fresnel_power = 0.5
-theme_edge_intensity = 0.8
+theme_fresnel_power = 1.0
+theme_edge_intensity = 0.5
 
 [node name="StaticBody3D" type="StaticBody3D" parent="DebugObjects/DebugRayCast"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="DebugObjects/DebugRayCast/StaticBody3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.1, 0 )
-shape = SubResource( 9 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 2.1, 0)
+shape = SubResource("9")
 
 [node name="CollisionShape2" type="CollisionShape3D" parent="DebugObjects/DebugRayCast/StaticBody3D"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0 )
-shape = SubResource( 9 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 2, 0)
+shape = SubResource("9")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="DebugObjects/DebugRayCast"]
 autoplay = "SwingRayCast"
-anims/RESET = SubResource( 10 )
-anims/SwingRayCast = SubResource( 8 )
+libraries = {
+"": SubResource("AnimationLibrary_y88im")
+}
 
 [node name="DebugPath" type="Node3D" parent="DebugObjects"]
 
 [node name="DebugPathWireframe" type="Path3D" parent="DebugObjects/DebugPath"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0 )
-curve = SubResource( 11 )
-script = ExtResource( 7 )
-theme = 0
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 0, 0)
+curve = SubResource("11")
+script = ExtResource("7")
+theme = 1
+theme_fresnel_power = 1.0
+theme_edge_intensity = 0.5
 
 [node name="DebugPathHalo" type="Path3D" parent="DebugObjects/DebugPath"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0 )
-curve = SubResource( 11 )
-script = ExtResource( 7 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.5, 0, 0)
+curve = SubResource("11")
+script = ExtResource("7")
 theme = 1
 theme_fresnel_power = 1.0
 theme_edge_intensity = 0.5
@@ -325,54 +322,54 @@ theme_edge_intensity = 0.5
 [node name="Row" type="Node3D" parent="Table"]
 
 [node name="Label3D" type="Label3D" parent="Table/Row"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 8.5, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -1, 8.5, 0)
 text = "Wireframe"
-font = ExtResource( 4 )
+font = ExtResource("7_m0r8u")
 
 [node name="Label3D2" type="Label3D" parent="Table/Row"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 8.5, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 8.5, 0)
 text = "Halo"
-font = ExtResource( 4 )
+font = ExtResource("7_m0r8u")
 
 [node name="Column" type="Node3D" parent="Table"]
 
 [node name="Title" type="Label3D" parent="Table/Column"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 8.5, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 8.5, 0)
 text = "Theme"
-font = ExtResource( 3 )
+font = ExtResource("7_m0r8u")
 horizontal_alignment = 2
 
 [node name="Label3D" type="Label3D" parent="Table/Column"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 7.25, 0 )
-text = "DebugCollisionPolygon"
-font = ExtResource( 4 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 7.25, 0)
+text = "DebugCollisionPolygon3D"
+font = ExtResource("7_m0r8u")
 horizontal_alignment = 2
 
 [node name="Label3D2" type="Label3D" parent="Table/Column"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5.25, 0 )
-text = "DebugCollisionShape"
-font = ExtResource( 4 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 5.25, 0)
+text = "DebugCollisionShape3D"
+font = ExtResource("7_m0r8u")
 horizontal_alignment = 2
 
 [node name="Label3D3" type="Label3D" parent="Table/Column"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, 0 )
-text = "DebugRayCast"
-font = ExtResource( 4 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 3, 0)
+text = "DebugRayCast3D"
+font = ExtResource("7_m0r8u")
 horizontal_alignment = 2
 
 [node name="Label3D4" type="Label3D" parent="Table/Column"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 0 )
-text = "DebugPath"
-font = ExtResource( 4 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5, 1, 0)
+text = "DebugPath3D"
+font = ExtResource("7_m0r8u")
 horizontal_alignment = 2
 
 [node name="Info" type="Label3D" parent="Table"]
-transform = Transform3D( 1, 0, 0, 0, 1, 0, 0, 0, 1, 9.95, 8.95, 0 )
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.95, 8.95, 0)
 pixel_size = 0.0075
 text = "For the Palette see ShowcaseDebug2D and the docs"
-font = ExtResource( 4 )
+font = ExtResource("7_m0r8u")
 horizontal_alignment = 2
 
-[node name="UI" parent="." instance=ExtResource( 1 )]
+[node name="UI" parent="." instance=ExtResource("1")]
 offset_top = 972.0
 offset_bottom = 1077.0

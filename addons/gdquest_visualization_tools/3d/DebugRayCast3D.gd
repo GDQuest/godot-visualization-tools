@@ -1,5 +1,5 @@
 @tool
-class_name DebugRayCast
+class_name DebugRayCast3D
 extends RayCast3D
 
 const DebugUtils := preload("../DebugUtils.gd")
@@ -35,9 +35,8 @@ func _notification(what: int) -> void:
 			match _theme.theme:
 				DebugTheme.ThemeType.WIREFRAME:
 					if not _theme.rids.instances.is_empty():
-						xform = xform.translated(_target_position.length() * Vector3.FORWARD)
+						xform = xform.translated_local(_target_position.length() * Vector3.FORWARD)
 						for rid in _theme.rids.instances:
-							RenderingServer.instance_set_transform(rid, xform)
 							RenderingServer.instance_set_transform(rid, xform)
 
 				DebugTheme.ThemeType.HALO:
@@ -46,7 +45,7 @@ func _notification(what: int) -> void:
 					xform.origin = global_transform.origin
 					var midway: Vector3 = 0.5 * _target_position.length() * Vector3.DOWN
 					for rid in _theme.rids.instances:
-						xform = xform.translated(midway)
+						xform = xform.translated_local(midway)
 						RenderingServer.instance_set_transform(rid, xform)
 
 
@@ -102,11 +101,13 @@ func _draw() -> void:
 
 
 func _get(property: StringName) -> Variant:
+	if not _theme:
+		return
 	return _theme.get_property(property)
 
 
 func _get_property_list() -> Array:
-	return _theme.get_property_list()
+	return _theme.gen_property_list()
 
 
 func _set(property: StringName, value: Variant) -> bool:

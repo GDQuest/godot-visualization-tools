@@ -1,5 +1,5 @@
 @tool
-class_name DebugPath
+class_name DebugPath3D
 extends Path3D
 
 const DebugUtils := preload("../DebugUtils.gd")
@@ -7,7 +7,10 @@ const DebugTheme := preload("DebugTheme.gd")
 
 const DELTA := 0.01
 
-@export var samples := 10 setget set_samples # (int, 0, 100)
+@export_range(0, 100) var samples := 10:
+	set(value):
+		samples = value
+		refresh()
 
 var _theme := DebugTheme.new(self)
 var _end_sphere_material := _theme.material.duplicate()
@@ -33,7 +36,7 @@ func _init():
 func _ready() -> void:
 	connect("curve_changed",Callable(self,"refresh"))
 	set_notify_transform(true)
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		add_to_group("GVTNavigation")
 
 
@@ -62,8 +65,8 @@ func _notification(what: int) -> void:
 			var n := samples if _theme.theme == DebugTheme.ThemeType.WIREFRAME else int(curve.get_baked_length() / curve.bake_interval)
 			for index in range(n):
 				var t := (index + 1) * unit if _theme.theme == DebugTheme.ThemeType.WIREFRAME else (index + 0.5) * curve.bake_interval
-				var offset1: Vector3 = global_transform * curve.interpolate_baked(t)
-				var offset2: Vector3 = global_transform * curve.interpolate_baked(t - DELTA)
+				var offset1: Vector3 = global_transform * curve.sample_baked(t)
+				var offset2: Vector3 = global_transform * curve.sample_baked(t - DELTA)
 				var direction := offset1 - offset2
 				xform.origin = offset1
 				xform = xform.looking_at(offset1 + DebugUtils.v3normal(direction), direction)
@@ -71,8 +74,8 @@ func _notification(what: int) -> void:
 
 			if _theme.theme == DebugTheme.ThemeType.HALO:
 				var t := n * curve.bake_interval + 0.5 * (curve.get_baked_length() - n * curve.bake_interval)
-				var offset1: Vector3 = global_transform * curve.interpolate_baked(t)
-				var offset2: Vector3 = global_transform * curve.interpolate_baked(t - DELTA)
+				var offset1: Vector3 = global_transform * curve.sample_baked(t)
+				var offset2: Vector3 = global_transform * curve.sample_baked(t - DELTA)
 				var direction := offset1 - offset2
 				xform.origin = offset1
 				xform = xform.looking_at(offset1 + DebugUtils.v3normal(direction), direction)
@@ -101,8 +104,8 @@ func _draw() -> void:
 			var st := SurfaceTool.new()
 			st.begin(Mesh.PRIMITIVE_LINES)
 			for sample in range(curve.get_baked_length() / curve.bake_interval):
-				st.add_vertex(curve.interpolate_baked(sample * curve.bake_interval))
-			st.add_vertex(curve.interpolate_baked(curve.get_baked_length()))
+				st.add_vertex(curve.sample_baked(sample * curve.bake_interval))
+			st.add_vertex(curve.sample_baked(curve.get_baked_length()))
 
 			var meshes_info := [{"primitive_type": RenderingServer.PRIMITIVE_LINES, "arrays": _spheres[0].get_debug_mesh().surface_get_arrays(0)}, {"primitive_type": RenderingServer.PRIMITIVE_TRIANGLES, "arrays": _spheres[1].get_mesh_arrays()}, {"primitive_type": RenderingServer.PRIMITIVE_LINE_STRIP, "arrays": st.commit_to_arrays()}]
 			_theme.draw_meshes(meshes_info)
@@ -115,7 +118,7 @@ func _draw() -> void:
 			RenderingServer.mesh_surface_set_material(_pointer_mesh_RID, 0, _theme.material.get_rid())
 			_pointer_multimesh_RID = RenderingServer.multimesh_create()
 			RenderingServer.multimesh_set_mesh(_pointer_multimesh_RID, _pointer_mesh_RID)
-			RenderingServer.multimesh_allocate_data(_pointer_multimesh_RID, samples, RenderingServer.MULTIMESH_TRANSFORM_3D, RenderingServer.MULTIMESH_COLOR_NONE)
+			RenderingServer.multimesh_allocate_data(_pointer_multimesh_RID, samples, RenderingServer.MultimeshTransformFormat.MULTIMESH_TRANSFORM_3D)
 			_pointer_instance_RID = RenderingServer.instance_create2(_pointer_multimesh_RID, get_world_3d().scenario)
 
 		DebugTheme.ThemeType.HALO:
@@ -131,21 +134,23 @@ func _draw() -> void:
 			_pointer_multimesh_RID = RenderingServer.multimesh_create()
 			RenderingServer.multimesh_set_mesh(_pointer_multimesh_RID, _pointer_mesh_RID)
 			var pointers := int(curve.get_baked_length() / curve.bake_interval) + 1
-			RenderingServer.multimesh_allocate_data(_pointer_multimesh_RID, pointers, RenderingServer.MULTIMESH_TRANSFORM_3D, RenderingServer.MULTIMESH_COLOR_NONE)
+			RenderingServer.multimesh_allocate_data(_pointer_multimesh_RID, pointers, RenderingServer.MultimeshTransformFormat.MULTIMESH_TRANSFORM_3D)
 			_pointer_instance_RID = RenderingServer.instance_create2(_pointer_multimesh_RID, get_world_3d().scenario)
 
 	_notification(NOTIFICATION_TRANSFORM_CHANGED)
 
 
-func _get(property: String):
+func _get(property: StringName):
+	if not _theme:
+		return
 	return _theme.get_property(property)
 
 
 func _get_property_list() -> Array:
-	return _theme.get_property_list()
+	return _theme.gen_property_list()
 
 
-func _set(property: String, value) -> bool:
+func _set(property: StringName, value: Variant) -> bool:
 	var result := false
 	match property:
 		"visible":
@@ -159,8 +164,3 @@ func set_visible(new_visible: bool) -> void:
 	visible = new_visible
 	RenderingServer.instance_set_visible(_pointer_instance_RID, visible)
 	_theme.set_visible(new_visible)
-
-
-func set_samples(new_samples: int) -> void:
-	samples = new_samples
-	refresh()

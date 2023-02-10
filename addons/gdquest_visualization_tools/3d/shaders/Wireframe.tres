@@ -4,8 +4,8 @@
 code = "shader_type spatial;
 render_mode depth_draw_opaque, unshaded, shadows_disabled, cull_disabled;
 
-uniform vec4 color: source_color = vec4(1.0);
+uniform vec3 color: source_color;
 
 void fragment() {
-	ALBEDO = color.rgb;
+	ALBEDO = color;
 }"

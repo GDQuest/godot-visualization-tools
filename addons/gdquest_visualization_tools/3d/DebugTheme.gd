@@ -53,7 +53,7 @@ func get_shader() -> Shader:
 	return SHADERS[theme]
 
 
-func get_property_list() -> Array:
+func gen_property_list() -> Array:
 	var result := [] if _node is Path3D else [palette_property]
 	match [is_implemented, theme]:
 		[false, ThemeType.HALO]:
@@ -108,8 +108,10 @@ func _set_enabled(new_enabled: bool) -> bool:
 func _set_palette(new_palette: int) -> bool:
 	palette = new_palette
 	_set_disabled_effect()
-	_node.disabled = palette == DebugPalette.Type.DISABLED
-#	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
+	if _node is DebugRayCast3D:
+		_node.enabled = palette != DebugPalette.Type.DISABLED
+	elif not _node is DebugPath3D:
+		_node.disabled = palette == DebugPalette.Type.DISABLED
 	return true
 
 

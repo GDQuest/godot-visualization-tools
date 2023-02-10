@@ -1,5 +1,5 @@
 @tool
-class_name DebugCollisionShape
+class_name DebugCollisionShape3D
 extends CollisionShape3D
 
 const DebugTheme := preload("DebugTheme.gd")
@@ -32,14 +32,14 @@ func _notification(what: int) -> void:
 				["SeparationRayShape3D", DebugTheme.ThemeType.WIREFRAME]:
 					for rid in _theme.rids.instances:
 						RenderingServer.instance_set_transform(rid, xform)
-						xform = xform.translated(shape.length * Vector3.BACK)
+						xform = xform.translated_local(shape.length * Vector3.BACK)
 				["SeparationRayShape3D", DebugTheme.ThemeType.HALO]:
 					xform.origin = Vector3.ZERO
 					xform = xform.rotated(global_transform.basis.x, PI / 2)
 					xform.origin = global_transform.origin
 					var midway: Vector3 = 0.5 * shape.length * Vector3.UP
 					for rid in _theme.rids.instances:
-						xform = xform.translated(midway)
+						xform = xform.translated_local(midway)
 						RenderingServer.instance_set_transform(rid, xform)
 				_:
 					for rid in _theme.rids.instances:
@@ -57,13 +57,13 @@ func refresh() -> void:
 	notify_property_list_changed()
 
 
-func _update_boxshape() -> Array:
+func _update_boxshape3d() -> Array:
 	var mesh := BoxMesh.new()
 	mesh.size = 2 * shape.extents
 	return [{"primitive_type": RenderingServer.PRIMITIVE_TRIANGLES, "arrays": mesh.get_mesh_arrays()}]
 
 
-func _update_cylindershape() -> Array:
+func _update_cylindershape3d() -> Array:
 	var mesh := CylinderMesh.new()
 	mesh.top_radius = shape.radius
 	mesh.bottom_radius = shape.radius
@@ -73,7 +73,7 @@ func _update_cylindershape() -> Array:
 	return [{"primitive_type": RenderingServer.PRIMITIVE_TRIANGLES, "arrays": mesh.get_mesh_arrays()}]
 
 
-func _update_capsuleshape() -> Array:
+func _update_capsuleshape3d() -> Array:
 	var mesh := CapsuleMesh.new()
 	mesh.radius = shape.radius
 	mesh.height = shape.height
@@ -81,7 +81,7 @@ func _update_capsuleshape() -> Array:
 	return [{"primitive_type": RenderingServer.PRIMITIVE_TRIANGLES, "arrays": mesh.get_mesh_arrays()}]
 
 
-func _update_rayshape() -> Array:
+func _update_separationrayshape3d() -> Array:
 	var result := []
 	var mesh: PrimitiveMesh = CylinderMesh.new()
 	mesh.top_radius = 0.01
@@ -100,7 +100,7 @@ func _update_rayshape() -> Array:
 	return result
 
 
-func _update_sphereshape() -> Array:
+func _update_sphereshape3d() -> Array:
 	var mesh := SphereMesh.new()
 	mesh.radius = shape.radius
 	mesh.height = 2 * shape.radius
@@ -138,11 +138,13 @@ func _draw() -> void:
 
 
 func _get(property: StringName) -> Variant:
+	if not _theme:
+		return
 	return _theme.get_property(property)
 
 
 func _get_property_list() -> Array:
-	return [] if shape == null else _theme.get_property_list()
+	return [] if shape == null else _theme.gen_property_list()
 
 
 func _set(property: StringName, value: Variant) -> bool:

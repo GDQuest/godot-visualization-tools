@@ -1,5 +1,5 @@
 @tool
-class_name DebugCollisionPolygon
+class_name DebugCollisionPolygon3D
 extends CollisionPolygon3D
 
 const DebugTheme := preload("DebugTheme.gd")
@@ -55,31 +55,32 @@ func _draw() -> void:
 				RenderingServer.mesh_surface_set_material(_theme.rids.resources[0], 0, _theme.material.get_rid())
 				is_drawn = true
 
-		DebugTheme.ThemeType.HALO:
-			_theme.rids.resources.push_back(RenderingServer.immediate_create())
-			for direction in [-1, 1]:
-				RenderingServer.immediate_begin(_theme.rids.resources[0], RenderingServer.PRIMITIVE_TRIANGLE_FAN)
-				RenderingServer.immediate_normal(_theme.rids.resources[0], Vector3.BACK if Geometry2D.is_polygon_clockwise(polygon) else Vector3.FORWARD)
-				for point in polygon:
-					RenderingServer.immediate_vertex(_theme.rids.resources[0], Vector3(point.x, point.y, 0.5 * depth * direction))
-				RenderingServer.immediate_end(_theme.rids.resources[0])
-
-			var closed_polygon := Array(polygon) + [polygon[0]]
-			for index in range(polygon_size):
-				RenderingServer.immediate_begin(_theme.rids.resources[0], RenderingServer.PRIMITIVE_TRIANGLE_FAN)
-				var level := 0.5 * depth
-				var v0 := Vector3(closed_polygon[index].x, closed_polygon[index].y, -level)
-				var v1 := Vector3(closed_polygon[index + 1].x, closed_polygon[index + 1].y, -level)
-				var v2 := Vector3(closed_polygon[index + 1].x, closed_polygon[index + 1].y, level)
-				var normal := (v1 - v0).cross(v1 - v2).normalized()
-				RenderingServer.immediate_normal(_theme.rids.resources[0], normal)
-				RenderingServer.immediate_vertex(_theme.rids.resources[0], v0)
-				RenderingServer.immediate_vertex(_theme.rids.resources[0], v1)
-				RenderingServer.immediate_vertex(_theme.rids.resources[0], v2)
-				RenderingServer.immediate_vertex(_theme.rids.resources[0], Vector3(closed_polygon[index].x, closed_polygon[index].y, level))
-				RenderingServer.immediate_end(_theme.rids.resources[0])
-				RenderingServer.immediate_set_material(_theme.rids.resources[0], _theme.material.get_rid())
-			is_drawn = true
+		# FIXME: Find solution for removal of `RenderingServer.immediate_*()`
+#		DebugTheme.ThemeType.HALO:
+#			_theme.rids.resources.push_back(RenderingServer.immediate_create())
+#			for direction in [-1, 1]:
+#				RenderingServer.immediate_begin(_theme.rids.resources[0], RenderingServer.PRIMITIVE_TRIANGLE_FAN)
+#				RenderingServer.immediate_normal(_theme.rids.resources[0], Vector3.BACK if Geometry2D.is_polygon_clockwise(polygon) else Vector3.FORWARD)
+#				for point in polygon:
+#					RenderingServer.immediate_vertex(_theme.rids.resources[0], Vector3(point.x, point.y, 0.5 * depth * direction))
+#				RenderingServer.immediate_end(_theme.rids.resources[0])
+#
+#			var closed_polygon := Array(polygon) + [polygon[0]]
+#			for index in range(polygon_size):
+#				RenderingServer.immediate_begin(_theme.rids.resources[0], RenderingServer.PRIMITIVE_TRIANGLE_FAN)
+#				var level := 0.5 * depth
+#				var v0 := Vector3(closed_polygon[index].x, closed_polygon[index].y, -level)
+#				var v1 := Vector3(closed_polygon[index + 1].x, closed_polygon[index + 1].y, -level)
+#				var v2 := Vector3(closed_polygon[index + 1].x, closed_polygon[index + 1].y, level)
+#				var normal := (v1 - v0).cross(v1 - v2).normalized()
+#				RenderingServer.immediate_normal(_theme.rids.resources[0], normal)
+#				RenderingServer.immediate_vertex(_theme.rids.resources[0], v0)
+#				RenderingServer.immediate_vertex(_theme.rids.resources[0], v1)
+#				RenderingServer.immediate_vertex(_theme.rids.resources[0], v2)
+#				RenderingServer.immediate_vertex(_theme.rids.resources[0], Vector3(closed_polygon[index].x, closed_polygon[index].y, level))
+#				RenderingServer.immediate_end(_theme.rids.resources[0])
+#				RenderingServer.immediate_set_material(_theme.rids.resources[0], _theme.material.get_rid())
+#			is_drawn = true
 
 	if is_drawn and get_world_3d().scenario.is_valid():
 		_theme.rids.instances.push_back(RenderingServer.instance_create2(_theme.rids.resources[0], get_world_3d().scenario))
@@ -87,11 +88,13 @@ func _draw() -> void:
 
 
 func _get(property: StringName) -> Variant:
+	if not _theme:
+		return
 	return _theme.get_property(property)
 
 
 func _get_property_list() -> Array:
-	return _theme.get_property_list()
+	return _theme.gen_property_list()
 
 
 func _set(property: StringName, value: Variant) -> bool:
