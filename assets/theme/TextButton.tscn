@@ -1,11 +1,11 @@
-[gd_scene load_steps=2 format=2]
+[gd_scene load_steps=2 format=3 uid="uid://1trjp4auby5s"]
 
-[ext_resource path="res://assets/theme/ui_theme.tres" type="Theme" id=1]
+[ext_resource type="Theme" uid="uid://c002v7yj71ujo" path="res://assets/theme/ui_theme.tres" id="1"]
 
 [node name="TextButton" type="Button"]
 offset_right = 318.0
-offset_bottom = 152.0
-theme = ExtResource( 1 )
-shortcut_in_tooltip = false
+offset_bottom = 105.0
+theme = ExtResource("1")
 action_mode = 0
+shortcut_in_tooltip = false
 text = "Button"

@@ -1,6 +1,7 @@
 res://ShowcaseDebug2D.tscn
+res://assets/theme/fonts/TitleFont.tres
 res://assets/theme/ui_theme.tres
-res://addons/gdquest_visualization_tools/2d/DebugPath2D.gd
-res://addons/gdquest_visualization_tools/2d/DebugRayCast2D.gd
-res://addons/gdquest_visualization_tools/2d/DebugCollisionTheme.gd
-res://addons/gdquest_visualization_tools/3d/DebugTheme.gd
+res://assets/theme/fonts/ExtraLargeFont.tres
+res://UI.tscn
+res://assets/theme/TextButton.tscn
+res://UI.gd
