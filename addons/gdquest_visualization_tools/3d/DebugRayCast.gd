@@ -52,7 +52,7 @@ func _notification(what: int) -> void:
 
 func _physics_process(delta: float) -> void:
 	if is_colliding():
-		_theme.material.set_shader_parameter("color", DebugPalette.COLORS[_theme.palette].contrasted())
+		_theme.material.set_shader_parameter("color", DebugPalette.COLORS[_theme.palette].inverted())
 		_target_position = get_collision_point() * transform
 	else:
 		_theme.material.set_shader_parameter("color", DebugPalette.COLORS[_theme.palette])

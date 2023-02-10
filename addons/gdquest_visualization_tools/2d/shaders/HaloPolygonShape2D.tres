@@ -4,6 +4,7 @@
 code = "shader_type canvas_item;
 
 
+uniform vec3 color: source_color;
 uniform float falloff: hint_range(0.025, 1) = 0.25;
 
 uniform int points_size = 0;
@@ -47,6 +48,6 @@ float rim(float d) {
 
 
 void fragment() {
-	COLOR.rgb = vec3(1.0);
+	COLOR.rgb = color;
 	COLOR.a = rim(sd_polygon(UV, points, points_size));
 }"

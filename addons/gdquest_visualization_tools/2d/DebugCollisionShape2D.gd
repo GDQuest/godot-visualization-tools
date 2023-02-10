@@ -33,12 +33,10 @@ func _draw() -> void:
 				draw_rect(rect, Color.WHITE)
 				match shape.get_class():
 					"CapsuleShape2D":
-						material.set_shader_parameter("ratio", 0.5 * shape.height / shape.radius)
+						material.set_shader_parameter("ratio", 0.5 * shape.height / shape.radius - 1)
 					"ConvexPolygonShape2D":
 						var xform := Transform2D(0, -rect.position)
 						xform = xform.scaled(Vector2.ONE / rect.size)
-#						var xform := Transform2D.IDENTITY.scaled(Vector2.ONE / rect.size)
-#						xform.origin = -rect.position
 						var normalized_points: Array = xform * shape.points
 						material.set_shader_parameter("points_size", normalized_points.size())
 						material.set_shader_parameter("points", DebugUtils.array_to_texture(normalized_points))
@@ -68,8 +66,8 @@ func _draw_convexpolygonshape2d() -> void:
 		return
 
 	if _theme.theme == DebugCollisionTheme.ThemeType.SIMPLE:
-		var points: Array = shape.points
-		points.append_array(points.slice(0, 0))
+		var points := Array(shape.points)
+		points.append_array(points.slice(0, 1))
 		draw_polyline(points, _theme.color, _theme.theme_width)
 	else:
 		var full_curve_length := DebugUtils.get_curve_polygon(-1, shape.points).get_baked_length()
@@ -92,12 +90,12 @@ func _get(property: StringName) -> Variant:
 
 
 func _get_property_list() -> Array:
-	return _theme.get_property_list()
+	return _theme.gen_property_list()
 
 
 func _get_rect_capsuleshape2d() -> Rect2:
 	var result := Rect2()
-	result.size = 2.0 * Vector2(shape.radius, shape.radius + 0.5 * shape.height)
+	result.size = 2.0 * Vector2(shape.radius, 0.5 * shape.height)
 	result.position = -0.5 * result.size
 	return result
 

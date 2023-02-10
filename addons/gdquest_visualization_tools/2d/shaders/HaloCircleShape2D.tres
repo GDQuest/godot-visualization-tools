@@ -1,9 +1,10 @@
-[gd_resource type="Shader" format=2]
+[gd_resource type="Shader" format=3 uid="uid://cyowgj33rkfue"]
 
 [resource]
 code = "shader_type canvas_item;
 
 
+uniform vec3 color: source_color;
 uniform float falloff: hint_range(0.025, 1) = 0.25;
 
 const float CLIP = 0.0;
@@ -21,6 +22,6 @@ float rim(float d) {
 
 void fragment() {
 	vec2 centered_uv = 2.0 * UV - 1.0;
-	COLOR.rgb = vec3(1.0);
+	COLOR.rgb = color;
 	COLOR.a = rim(sd_circle(centered_uv));
 }"

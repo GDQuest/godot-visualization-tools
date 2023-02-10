@@ -108,7 +108,8 @@ func _set_enabled(new_enabled: bool) -> bool:
 func _set_palette(new_palette: int) -> bool:
 	palette = new_palette
 	_set_disabled_effect()
-	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
+	_node.disabled = palette == DebugPalette.Type.DISABLED
+#	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
 	return true
 
 

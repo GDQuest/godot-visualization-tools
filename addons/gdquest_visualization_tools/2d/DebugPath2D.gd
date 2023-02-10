@@ -8,8 +8,11 @@ const TRIANGLE_COG_DISTANCE := 10
 const DEFAULT_THEME_WIDTH := 4
 const COLOR := DebugPalette.COLORS[DebugPalette.Type.INTERACT]
 
-@export var width := DEFAULT_THEME_WIDTH setget set_width # (int, 1, 10)
-@export var spread := 100.0 setget set_spread # (float, 1, 500)
+@export_range(1, 10) var width := DEFAULT_THEME_WIDTH:
+	set(value):
+		width = value
+		_xform_scale = width / float(DEFAULT_THEME_WIDTH) * Vector2.ONE
+@export_range(1, 500) var spread := 100.0
 
 var _triangle_vertices := PackedVector2Array([TRIANGLE_COG_DISTANCE * (Vector2.LEFT + Vector2.UP).normalized(), TRIANGLE_COG_DISTANCE * (Vector2.LEFT + Vector2.DOWN).normalized(), TRIANGLE_COG_DISTANCE * Vector2.RIGHT])
 var _xform_scale := width / float(DEFAULT_THEME_WIDTH) * Vector2.ONE
@@ -20,7 +23,7 @@ func _init():
 
 
 func _ready() -> void:
-	if not Engine.editor_hint:
+	if not Engine.is_editor_hint():
 		add_to_group("GVTNavigation")
 
 
@@ -38,19 +41,8 @@ func _draw() -> void:
 	var unit := curve.get_baked_length() / triangles
 	for index in range(1, triangles):
 		var t := index * unit
-		var offset := curve.interpolate_baked(t)
-		var direction := offset - curve.interpolate_baked(t - 1)
+		var offset := curve.sample_baked(t)
+		var direction := offset - curve.sample_baked(t - 1)
 		var xform := Transform2D.IDENTITY.scaled(_xform_scale).rotated(direction.angle())
 		xform.origin = offset
 		draw_primitive(xform * _triangle_vertices, [Color.WHITE], [])
-
-
-func set_width(new_width: int) -> void:
-	width = new_width
-	_xform_scale = width / float(DEFAULT_THEME_WIDTH) * Vector2.ONE
-	queue_redraw()
-
-
-func set_spread(new_spread: float) -> void:
-	spread = new_spread
-	queue_redraw()

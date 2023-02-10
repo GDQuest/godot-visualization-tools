@@ -4,6 +4,8 @@
 code = "shader_type canvas_item;
 
 
+uniform vec3 color: source_color;
+
 uniform float falloff: hint_range(0.025, 1) = 0.25;
 uniform float ratio = 0.0;
 
@@ -28,6 +30,6 @@ float rim(float d) {
 void fragment() {
 	vec2 centered_uv = (2.0 * UV - 1.0);
 	vec2 scale = vec2(1.0, 1.0 + ratio);
-	COLOR.rgb = vec3(1.0);
+	COLOR.rgb = color;
 	COLOR.a = rim(sd_segment(scale * centered_uv));
 }"

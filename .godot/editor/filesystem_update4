@@ -1,8 +1,6 @@
-res://dbg.tscn
-res://addons/gdquest_visualization_tools/DebugUtils.gd
-res://addons/gdquest_visualization_tools/2d/DebugCollisionPolygon2D.gd
-res://addons/gdquest_visualization_tools/2d/shaders/Shape2D.tres
-res://addons/gdquest_visualization_tools/2d/shaders/HaloCapsuleShape2D.tres
-res://addons/gdquest_visualization_tools/2d/shaders/HaloPolygonShape2D.tres
 res://ShowcaseDebug2D.tscn
 res://assets/theme/ui_theme.tres
+res://addons/gdquest_visualization_tools/2d/DebugPath2D.gd
+res://addons/gdquest_visualization_tools/2d/DebugRayCast2D.gd
+res://addons/gdquest_visualization_tools/2d/DebugCollisionTheme.gd
+res://addons/gdquest_visualization_tools/3d/DebugTheme.gd

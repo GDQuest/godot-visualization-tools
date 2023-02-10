@@ -56,7 +56,8 @@ static func get_curve_capsule(radius: float, height: float, sample := 24, transf
 	var quadrant1 := sample / 4
 	var quadrant3 := 3 * quadrant1
 	for i in range(sample):
-		var offset := Vector2(0, height * 0.5 * (-1 if (i > quadrant1 and i <= quadrant3) else 1))
+		var sgn := (-1 if (i > quadrant1 and i <= quadrant3) else 1)
+		var offset := Vector2(0, sgn * height * 0.5 + radius * (-1 * sgn))
 		var circle_point := Vector2(sin(i * step), cos(i * step)) * radius
 		result.add_point(transform * circle_point + offset)
 		if i == quadrant1 or i == quadrant3:

@@ -80,7 +80,6 @@ func _set_disabled_effect() -> void:
 		_previous_palette = palette
 	color = DebugPalette.COLORS[palette]
 	_node.material.set_shader_parameter("color", color)
-#	_node.queue_redraw()
 
 
 func _set_disabled(new_disabled: bool) -> bool:
@@ -92,7 +91,8 @@ func _set_disabled(new_disabled: bool) -> bool:
 func _set_palette(new_palette: int) -> bool:
 	palette = new_palette
 	_set_disabled_effect()
-	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
+	_node.disabled = palette == DebugPalette.Type.DISABLED
+#	_node.set_deferred("disabled", palette == DebugPalette.Type.DISABLED)
 	return true
 
 
